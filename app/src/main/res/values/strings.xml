@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Finance Manager</string>
+    <string name="ok">OK</string>
+    <string name="num1">Numero 1</string>
+    <string name="num2">Numero 2</string>
+    <string name="somar">Somar</string>
+    <string name="salvar">Salvar</string>
+    <string name="foto">Tirar Foto</string>
+    <string name="selecione">Selecione...</string>
+
+    <!--Tela de cadastro-->
+    <string name="cadastro.nome">Nome </string>
+    <string name="lbl_email">Email </string>
+    <string name="cadastro.funcao">Função </string>
+    <string name="cadastro.sexo">Sexo: </string>
+    <string name="cadastro.masc">Masculino </string>
+    <string name="cadastro.fem">Feminino </string>
+    <string name="cadastro.hobbie">Hobbies: </string>
+    <string name="cadastro.dancar">Dançar</string>
+    <string name="cadastro.ler">Ler</string>
+    <string name="cadastro.viajar">Viajar</string>
+
+    <!--Tela de login-->
+    <string name="lbl_senha">Senha</string>
+    <string name="btn_enviar">Enviar</string>
+</resources>
