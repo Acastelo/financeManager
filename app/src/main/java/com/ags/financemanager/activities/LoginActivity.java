@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
 
         edtEmail     = (EditText) findViewById(R.id.edtLoginEmail);
         edtSenha     = (EditText) findViewById(R.id.edtLoginSenha);
-        btnEnviar    = (Button) findViewById(R.id.btnEnviar);
+        btnEnviar    = (Button) findViewById(R.id.btnLogin);
         txtConta     = (TextView) findViewById(R.id.txtConta);
 
         btnEnviar.setOnClickListener(new BtnEnviarListener());

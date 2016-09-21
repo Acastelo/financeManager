@@ -22,6 +22,6 @@
 
     <!--Tela de login-->
     <string name="lbl_senha">Senha</string>
-    <string name="btn_enviar">Enviar</string>
-    <string name="conta">Crie uma conta!</string>
+    <string name="btn_login">Login</string>
+    <string name="conta">Não tem conta ainda? Crie uma.</string>
 </resources>
