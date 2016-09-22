@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            Intent cadastro = new Intent(getApplicationContext(), Cadastro.class);
+            Intent cadastro = new Intent(getApplicationContext(), CadastroActivity.class);
             startActivity(cadastro);
 
         }

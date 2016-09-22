@@ -24,4 +24,6 @@
     <string name="lbl_senha">Senha</string>
     <string name="btn_login">Login</string>
     <string name="conta">Não tem conta ainda? Crie uma.</string>
+    <string name="criar_conta">Criar Conta</string>
+    <string name="faca_login">Já é Membro? Faça Login</string>
 </resources>

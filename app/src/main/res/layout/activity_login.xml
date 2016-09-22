@@ -21,7 +21,7 @@
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="@dimen/padding_side"
-            android:src="@drawable/ags_logo" />
+            android:src="@drawable/ic_laucher1" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
