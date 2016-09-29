@@ -10,17 +10,17 @@ public class Despesa {
     private String descricao;
     private int qtdParcelas;
     private Usuario usuario;
-    private String categoriaDespesa;
+    private TipoDespesa tipoDespesa;
 
-    public Despesa(String descricao, int qtdParcelas, Usuario usuario, String categoriaDespesa) {
+    public Despesa(String descricao, int qtdParcelas, Usuario usuario, TipoDespesa tipoDespesa) {
         this.descricao = descricao;
         this.qtdParcelas = qtdParcelas;
         this.usuario = usuario;
-        this.categoriaDespesa = categoriaDespesa;
+        this.tipoDespesa = tipoDespesa;
     }
 
-    public Despesa(long id, String descricao, int qtdParcelas, Usuario usuario, String categoriaDespesa) {
-        this(descricao, qtdParcelas, usuario, categoriaDespesa);
+    public Despesa(long id, String descricao, int qtdParcelas, Usuario usuario, TipoDespesa tipoDespesa) {
+        this(descricao, qtdParcelas, usuario, tipoDespesa);
         this.id = id;
     }
 
@@ -56,12 +56,12 @@ public class Despesa {
         this.usuario = usuario;
     }
 
-    public String getCategoriaDespesa() {
-        return categoriaDespesa;
+    public TipoDespesa getTipoDespesa() {
+        return tipoDespesa;
     }
 
-    public void setCategoriaDespesa(String categoriaDespesa) {
-        this.categoriaDespesa = categoriaDespesa;
+    public void setTipoDespesa(TipoDespesa tipoDespesa) {
+        this.tipoDespesa = tipoDespesa;
     }
 }
 
