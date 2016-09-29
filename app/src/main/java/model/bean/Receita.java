@@ -10,19 +10,19 @@ public class Receita {
     private String descricao;
     private int data;
     private float valor;
-    private String categoriaReceita;
+    private TipoReceita tipoReceita;
     private Usuario usuario;
 
-    public Receita(String descricao, int data, float valor, String categoriaReceita, Usuario usuario) {
+    public Receita(String descricao, int data, float valor, TipoReceita tipoReceita, Usuario usuario) {
         this.descricao = descricao;
         this.data = data;
         this.valor = valor;
-        this.categoriaReceita = categoriaReceita;
+        this.tipoReceita = tipoReceita;
         this.usuario = usuario;
     }
 
-    public Receita(long id, String descricao, int data, float valor, String categoriaReceita, Usuario usuario) {
-        this(descricao, data, valor, categoriaReceita, usuario);
+    public Receita(long id, String descricao, int data, float valor, TipoReceita tipoReceita, Usuario usuario) {
+        this(descricao, data, valor, tipoReceita, usuario);
         this.id = id;
     }
 
@@ -58,12 +58,12 @@ public class Receita {
         this.valor = valor;
     }
 
-    public String getCategoriaReceita() {
-        return categoriaReceita;
+    public TipoReceita getTipoReceita() {
+        return tipoReceita;
     }
 
-    public void setCategoriaReceita(String categoriaReceita) {
-        this.categoriaReceita = categoriaReceita;
+    public void setTipoReceita(TipoReceita tipoReceita) {
+        this.tipoReceita = tipoReceita;
     }
 
     public Usuario getUsuario() {
