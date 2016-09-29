@@ -14,28 +14,27 @@ public class ReceitaControllerImpl extends BaseControllerImpl<Receita> implement
 
     private ReceitaDAO receitaDAO;
 
-    public ReceitaControllerImpl(Context context, ReceitaDAO receitaDAO) {
-        super.setContext(context);
+    public ReceitaControllerImpl(ReceitaDAO receitaDAO) {
         this.receitaDAO = receitaDAO;
     }
 
     @Override
-    public void salvar(Receita objeto) {
+    public void salvar(Receita receita) {
+        // TODO
+    }
+
+    @Override
+    public void salvarTodos(List<Receita> receitas) {
         //TODO
     }
 
     @Override
-    public void salvarTodos(List<Receita> objetos) {
+    public void excluir(Receita receita) {
         //TODO
     }
 
     @Override
-    public void excluir(Receita objeto) {
-        //TODO
-    }
-
-    @Override
-    public void excluirTodos(List<Receita> objetos) {
+    public void excluirTodos(List<Receita> receitas) {
         //TODO
     }
 
