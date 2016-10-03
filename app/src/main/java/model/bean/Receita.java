@@ -73,4 +73,22 @@ public class Receita {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+
+    public void validarUsuario() {
+        if (getUsuario() == null)
+            throw new IllegalArgumentException("Usuário da receita não pode ser nulo.");
+    }
+
+    public void validarData() {
+        if (getData() == 0)
+            throw new IllegalArgumentException("Data da receita não pode ser igual à zero.");
+        else if (getData() < 0)
+            throw new IllegalArgumentException("Data da receita não pode ser negativo.");
+    }
+
+    public void validarId() {
+        if (getId() <= 0)
+            throw new IllegalArgumentException("ID inválido.");
+
+    }
 }

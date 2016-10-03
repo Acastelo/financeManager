@@ -1,5 +1,6 @@
 package com.ags.financemanager.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import model.bean.Receita;
@@ -17,5 +18,5 @@ public interface BaseController<T> {
 
     void excluirTodos(List<T> objetos);
 
-    List<T> getTodos();
+    List<T> getPorData(Date dataInicial, Date dataFinal);
 }

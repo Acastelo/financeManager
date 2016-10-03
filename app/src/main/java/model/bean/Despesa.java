@@ -63,5 +63,17 @@ public class Despesa {
     public void setTipoDespesa(TipoDespesa tipoDespesa) {
         this.tipoDespesa = tipoDespesa;
     }
+
+    public void validarUsuario() {
+        if (getUsuario() == null)
+            throw new IllegalArgumentException("Usuário da despesa não pode ser nulo.");
+    }
+
+    public void validarId() {
+        if (getId() <= 0)
+            throw new IllegalArgumentException("ID inválido.");
+
+    }
+
 }
 

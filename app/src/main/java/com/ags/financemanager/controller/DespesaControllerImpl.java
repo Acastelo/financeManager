@@ -9,55 +9,55 @@ import com.ags.financemanager.controller.helper.ExceptionHelper;
 import java.util.Date;
 import java.util.List;
 
-import model.bean.Receita;
-import model.dao.ReceitaDAO;
+import model.bean.Despesa;
+import model.dao.DespesaDAO;
 
 /**
- * Created by Max on 29/09/2016.
+ * Created by Max on 03/10/2016.
  */
-public class ReceitaControllerImpl extends BaseControllerImpl<Receita> implements ReceitaController {
+public class DespesaControllerImpl extends BaseControllerImpl<Despesa> implements DespesaController {
 
-    private ReceitaDAO receitaDAO;
+    private DespesaDAO despesaDAO;
     private ExceptionHelper exceptionHelper;
     private ValidadorData validadorData;
 
-    public ReceitaControllerImpl(Context context) {
-        this.receitaDAO = new ReceitaDAO(context);
+    public DespesaControllerImpl(Context context) {
+        this.despesaDAO = new DespesaDAO(context);
         this.exceptionHelper = new ExceptionHelper();
         this.validadorData = new ValidadorData();
     }
 
     @Override
-    public void salvar(Receita receita) {
+    public void salvar(Despesa despesa) {
         try {
 
             validarDAO();
 
-            validarReceitaSalvar(receita);
-            receitaDAO.inserirReceita(receita);
+            validarDespesaSalvar(despesa);
+            despesaDAO.inserirDespesa(despesa);
 
         } catch (Exception e) {
             if (e instanceof ControllerException)
                 throw e;
 
-            throw exceptionHelper.getNewSalvarControllerException(receita, e);
+            throw exceptionHelper.getNewSalvarControllerException(despesa, e);
         }
     }
 
     private void validarDAO() {
-        if (receitaDAO == null)
+        if (despesaDAO == null)
             throw new NullPointerException("ReceitaDAO está nulo.");
     }
 
-    private void validarReceitaSalvar(Receita receita) {
+    private void validarDespesaSalvar(Despesa despesa) {
 
-        if (receita == null) {
+        if (despesa == null) {
             throw new IllegalArgumentException("Receita não pode ser nulo.");
         } else {
 
             try {
-                receita.validarUsuario();
-                receita.validarData();
+                despesa.validarUsuario();
+                despesa.validarData();
             } catch (Exception e) {
                 throw e;
             }
@@ -67,54 +67,52 @@ public class ReceitaControllerImpl extends BaseControllerImpl<Receita> implement
     }
 
     @Override
-    public void salvarTodos(List<Receita> receitas) {
+    public void salvarTodos(List<Despesa> despesas) {
 
-        Receita recitaTemp = null;
+        Despesa despesaTemp = null;
 
         try {
 
             validarDAO();
 
-            for (Receita receita : receitas) {
-                recitaTemp = receita;
-                validarReceitaSalvar(receita);
-                receitaDAO.inserirReceita(receita);
+            for (Despesa despesa : despesas) {
+                despesaTemp = despesa;
+                validarDespesaSalvar(despesa);
+                despesaDAO.inserirDespesa(despesa);
             }
 
         } catch (Exception e) {
             if (e instanceof ControllerException)
                 throw e;
 
-            throw exceptionHelper.getNewSalvarControllerException(recitaTemp, e);
+            throw exceptionHelper.getNewSalvarControllerException(despesaTemp, e);
         }
     }
 
     @Override
-    public void excluir(Receita receita) {
+    public void excluir(Despesa despesa) {
         try {
 
             validarDAO();
 
-            validarReceitaExcluir(receita);
+            validarDespesaExcluir(despesa);
 
-
-            receitaDAO.excluirReceita(receita);
-
+            despesaDAO.excluirDespesa(receita);
 
         } catch (Exception e) {
             if (e instanceof ControllerException)
                 throw e;
 
-            throw exceptionHelper.getNewExcluirControllerException(receita, e);
+            throw exceptionHelper.getNewExcluirControllerException(despesa, e);
         }
     }
 
-    private void validarReceitaExcluir(Receita receita) {
-        if (receita == null) {
+    private void validarDespesaExcluir(Despesa despesa) {
+        if (despesa == null) {
             throw new IllegalArgumentException("Receita não pode ser nulo.");
         } else {
             try {
-                receita.validarId();
+                despesa.validarId();
             } catch (Exception e) {
                 throw e;
             }
@@ -122,30 +120,30 @@ public class ReceitaControllerImpl extends BaseControllerImpl<Receita> implement
     }
 
     @Override
-    public void excluirTodos(List<Receita> receitas) {
+    public void excluirTodos(List<Despesa> despesas) {
 
-        Receita recitaTemp = null;
+        Despesa despesaTemp = null;
 
         try {
 
             validarDAO();
 
-            for (Receita receita : receitas) {
-                recitaTemp = receita;
-                validarReceitaExcluir(receita);
-                receitaDAO.excluirReceita(receita);
+            for (Despesa despesa : despesas) {
+                despesaTemp = despesa;
+                validarDespesaExcluir(despesa);
+                despesaDAO.excluirDespesa(despesa);
             }
 
         } catch (Exception e) {
             if (e instanceof ControllerException)
                 throw e;
 
-            throw exceptionHelper.getNewSalvarControllerException(recitaTemp, e);
+            throw exceptionHelper.getNewSalvarControllerException(despesaTemp, e);
         }
     }
 
     @Override
-    public List<Receita> getPorData(Date dataInicial, Date dataFinal) {
+    public List<Despesa> getPorData(Date dataInicial, Date dataFinal) {
 
         try {
 
@@ -156,9 +154,9 @@ public class ReceitaControllerImpl extends BaseControllerImpl<Receita> implement
             int intDataInicial = (int) dataInicial.getTime();
             int intDataFinal = (int) dataFinal.getTime();
 
-            List<Receita> receitas = receitaDAO.buscarReceitaPorData(intDataInicial, intDataFinal);
+            List<Despesa> despesas = despesaDAO.buscarDespesaPorData(intDataInicial, intDataInicial);
 
-            return receitas;
+            return despesas;
 
         } catch (Exception e) {
             if (e instanceof ControllerException)
@@ -169,4 +167,3 @@ public class ReceitaControllerImpl extends BaseControllerImpl<Receita> implement
     }
 
 }
-
