@@ -1,22 +1,22 @@
-package model.dao;
+package com.ags.financemanager.model.dao;
 
 import android.content.Context;
 import android.database.Cursor;
 
-import model.DBContract;
-import model.DatabaseAccess;
-import model.bean.TipoDespesa;
-import model.bean.TipoReceita;
+import com.ags.financemanager.model.DBContract;
+import com.ags.financemanager.model.DatabaseAccess;
+import com.ags.financemanager.model.bean.TipoDespesa;
 
 /**
  * Created by Maikon Igor on 29/09/2016.
  */
 
-public class TipoDespesaDAO extends DatabaseAccess {
-    public TipoDespesaDAO(Context context) {
+public class TipoDespesaDAOImpl extends DatabaseAccess implements TipoDespesaDAO {
+    public TipoDespesaDAOImpl(Context context) {
         super(context);
     }
 
+    @Override
     public TipoDespesa buscarTipoDespesa(long idTipoDespesa){
         TipoDespesa tipo = null;
         String colunas[] = {

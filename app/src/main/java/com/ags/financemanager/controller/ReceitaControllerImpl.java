@@ -1,16 +1,13 @@
 package com.ags.financemanager.controller;
 
-import android.content.Context;
-
 import com.ags.financemanager.controller.business.ValidadorData;
 import com.ags.financemanager.controller.exception.ControllerException;
 import com.ags.financemanager.controller.helper.ExceptionHelper;
+import com.ags.financemanager.model.bean.Receita;
+import com.ags.financemanager.model.dao.ReceitaDAO;
 
 import java.util.Date;
 import java.util.List;
-
-import model.bean.Receita;
-import model.dao.ReceitaDAO;
 
 /**
  * Created by Max on 29/09/2016.
@@ -21,8 +18,8 @@ public class ReceitaControllerImpl extends BaseControllerImpl<Receita> implement
     private ExceptionHelper exceptionHelper;
     private ValidadorData validadorData;
 
-    public ReceitaControllerImpl(Context context) {
-        this.receitaDAO = new ReceitaDAO(context);
+    public ReceitaControllerImpl(ReceitaDAO receitaDAO) {
+        this.receitaDAO = receitaDAO;
         this.exceptionHelper = new ExceptionHelper();
         this.validadorData = new ValidadorData();
     }
@@ -44,27 +41,6 @@ public class ReceitaControllerImpl extends BaseControllerImpl<Receita> implement
         }
     }
 
-    private void validarDAO() {
-        if (receitaDAO == null)
-            throw new NullPointerException("ReceitaDAO está nulo.");
-    }
-
-    private void validarReceitaSalvar(Receita receita) {
-
-        if (receita == null) {
-            throw new IllegalArgumentException("Receita não pode ser nulo.");
-        } else {
-
-            try {
-                receita.validarUsuario();
-                receita.validarData();
-            } catch (Exception e) {
-                throw e;
-            }
-
-        }
-
-    }
 
     @Override
     public void salvarTodos(List<Receita> receitas) {
@@ -94,30 +70,15 @@ public class ReceitaControllerImpl extends BaseControllerImpl<Receita> implement
         try {
 
             validarDAO();
-
             validarReceitaExcluir(receita);
 
-
             receitaDAO.excluirReceita(receita);
-
 
         } catch (Exception e) {
             if (e instanceof ControllerException)
                 throw e;
 
             throw exceptionHelper.getNewExcluirControllerException(receita, e);
-        }
-    }
-
-    private void validarReceitaExcluir(Receita receita) {
-        if (receita == null) {
-            throw new IllegalArgumentException("Receita não pode ser nulo.");
-        } else {
-            try {
-                receita.validarId();
-            } catch (Exception e) {
-                throw e;
-            }
         }
     }
 
@@ -153,10 +114,7 @@ public class ReceitaControllerImpl extends BaseControllerImpl<Receita> implement
 
             this.validadorData.validarDatas(dataInicial, dataFinal);
 
-            int intDataInicial = (int) dataInicial.getTime();
-            int intDataFinal = (int) dataFinal.getTime();
-
-            List<Receita> receitas = receitaDAO.buscarReceitaPorData(intDataInicial, intDataFinal);
+            List<Receita> receitas = receitaDAO.buscarReceitaPorData(dataInicial.getTime(), dataFinal.getTime());
 
             return receitas;
 
@@ -165,6 +123,40 @@ public class ReceitaControllerImpl extends BaseControllerImpl<Receita> implement
                 throw e;
 
             throw exceptionHelper.getNewConsultarControllerException(e);
+        }
+    }
+
+    private void validarDAO() {
+        if (receitaDAO == null)
+            throw new NullPointerException("ReceitaDAO está nulo.");
+    }
+
+    private void validarReceitaSalvar(Receita receita) {
+
+        if (receita == null) {
+            throw new IllegalArgumentException("Receita não pode ser nulo.");
+        } else {
+
+            try {
+                receita.validarUsuario();
+                receita.validarData();
+            } catch (Exception e) {
+                throw e;
+            }
+
+        }
+
+    }
+
+    private void validarReceitaExcluir(Receita receita) {
+        if (receita == null) {
+            throw new IllegalArgumentException("Receita não pode ser nulo.");
+        } else {
+            try {
+                receita.validarId();
+            } catch (Exception e) {
+                throw e;
+            }
         }
     }
 

@@ -1,4 +1,4 @@
-package model;
+package com.ags.financemanager.model;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

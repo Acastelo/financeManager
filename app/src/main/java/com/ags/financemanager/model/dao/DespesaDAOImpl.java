@@ -1,25 +1,26 @@
-package model.dao;
+package com.ags.financemanager.model.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import model.DBContract;
-import model.DatabaseAccess;
-import model.bean.Despesa;
-import model.bean.TipoDespesa;
-import model.bean.Usuario;
+import com.ags.financemanager.model.DBContract;
+import com.ags.financemanager.model.DatabaseAccess;
+import com.ags.financemanager.model.bean.Despesa;
+import com.ags.financemanager.model.bean.TipoDespesa;
+import com.ags.financemanager.model.bean.Usuario;
 
 /**
  * Created by Maikon Igor on 29/09/2016.
  */
 
-public class DespesaDAO extends DatabaseAccess {
-    public DespesaDAO(Context context) {
+public class DespesaDAOImpl extends DatabaseAccess implements DespesaDAO {
+    public DespesaDAOImpl(Context context) {
         super(context);
     }
 
+    @Override
     public long inserirDespesa(Despesa despesa){
         ContentValues values = new ContentValues();
         values.put(DBContract.DespesaTable.COL_DESCRICAO, despesa.getDescricao());
@@ -32,6 +33,7 @@ public class DespesaDAO extends DatabaseAccess {
         return insertedId;
     }
 
+    @Override
     public Despesa buscarDespesa(long idDespesa){
         Despesa despesas = null;
 
@@ -58,8 +60,8 @@ public class DespesaDAO extends DatabaseAccess {
             long idTipoDespesa = cursor.getLong(cursor
                     .getColumnIndex(DBContract.DespesaTable.COL_ID_CATEGORIA_DESPESA));
 
-            UsuarioDAO udao = new UsuarioDAO(getContext());
-            TipoDespesaDAO tddao = new TipoDespesaDAO(getContext());
+            UsuarioDAOImpl udao = new UsuarioDAOImpl(getContext());
+            TipoDespesaDAOImpl tddao = new TipoDespesaDAOImpl(getContext());
 
             Usuario usuario = udao.buscarUsuario(idUsuario);
             TipoDespesa tipoDespesa = tddao.buscarTipoDespesa(idTipoDespesa);

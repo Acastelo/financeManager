@@ -1,23 +1,24 @@
-package model.dao;
+package com.ags.financemanager.model.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import model.DBContract;
-import model.DatabaseAccess;
-import model.bean.Usuario;
+import com.ags.financemanager.model.DBContract;
+import com.ags.financemanager.model.DatabaseAccess;
+import com.ags.financemanager.model.bean.Usuario;
 
 /**
  * Created by Maikon Igor on 29/09/2016.
  */
 
-public class UsuarioDAO extends DatabaseAccess {
-    public UsuarioDAO(Context context) {
+public class UsuarioDAOImpl extends DatabaseAccess implements UsuarioDAO {
+    public UsuarioDAOImpl(Context context) {
         super(context);
     }
 
+    @Override
     public long inserirUsuario(Usuario usuario){
         ContentValues values = new ContentValues();
         values.put(DBContract.UsuarioTable.COL_NOME, usuario.getNome());
@@ -30,6 +31,7 @@ public class UsuarioDAO extends DatabaseAccess {
         return insertedId;
     }
 
+    @Override
     public Usuario buscarUsuario(long idusuario){
         String colunas[]={
                 DBContract.UsuarioTable.COL_ID,
@@ -58,6 +60,7 @@ public class UsuarioDAO extends DatabaseAccess {
         return usuario;
     }
 
+    @Override
     public boolean updateUsuario(Usuario usuario){
         String colunas[]={
                 DBContract.UsuarioTable.COL_ID,

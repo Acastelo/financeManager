@@ -1,4 +1,4 @@
-package model.dao;
+package com.ags.financemanager.model.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,21 +7,22 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 
-import model.DBContract;
-import model.DatabaseAccess;
-import model.bean.Receita;
-import model.bean.TipoReceita;
-import model.bean.Usuario;
+import com.ags.financemanager.model.DBContract;
+import com.ags.financemanager.model.DatabaseAccess;
+import com.ags.financemanager.model.bean.Receita;
+import com.ags.financemanager.model.bean.TipoReceita;
+import com.ags.financemanager.model.bean.Usuario;
 
 /**
  * Created by Maikon Igor on 28/09/2016.
  */
 
-public class ReceitaDAO extends DatabaseAccess {
-    public ReceitaDAO(Context context) {
+public class ReceitaDAOImpl extends DatabaseAccess implements ReceitaDAO {
+    public ReceitaDAOImpl(Context context) {
         super(context);
     }
 
+    @Override
     public long inserirReceita(Receita receita){
         ContentValues values = new ContentValues();
         values.put(DBContract.ReceitaTable.COL_DESCRICAO, receita.getDescricao());
@@ -35,7 +36,8 @@ public class ReceitaDAO extends DatabaseAccess {
         return insertedId;
     }
 
-    public ArrayList<Receita> buscarReceitaPorData(int dataInicial, int dataFinal){
+    @Override
+    public ArrayList<Receita> buscarReceitaPorData(long dataInicial, long dataFinal){
         ArrayList<Receita> receitas = new ArrayList<Receita>();
 
         String colunas[] = {
@@ -66,8 +68,8 @@ public class ReceitaDAO extends DatabaseAccess {
             int idUsuario = cursor.getInt(cursor
                     .getColumnIndex(DBContract.ReceitaTable.COL_DATA));
 
-            UsuarioDAO udao = new UsuarioDAO(getContext());
-            TipoReceitaDAO trdao = new TipoReceitaDAO(getContext());
+            UsuarioDAOImpl udao = new UsuarioDAOImpl(getContext());
+            TipoReceitaDAOImpl trdao = new TipoReceitaDAOImpl(getContext());
 
             Usuario usuario = udao.buscarUsuario(idUsuario);
             TipoReceita tipoReceita = trdao.buscarTipoReceita(categoriaReceita);
@@ -78,6 +80,7 @@ public class ReceitaDAO extends DatabaseAccess {
         return receitas;
     }
 
+    @Override
     public Receita buscarReceita(long idReceita){
         Receita receita = null;
 
@@ -109,8 +112,8 @@ public class ReceitaDAO extends DatabaseAccess {
             int idUsuario = cursor.getInt(cursor
                     .getColumnIndex(DBContract.ReceitaTable.COL_DATA));
 
-            UsuarioDAO udao = new UsuarioDAO(getContext());
-            TipoReceitaDAO trdao = new TipoReceitaDAO(getContext());
+            UsuarioDAOImpl udao = new UsuarioDAOImpl(getContext());
+            TipoReceitaDAOImpl trdao = new TipoReceitaDAOImpl(getContext());
 
             Usuario usuario = udao.buscarUsuario(idUsuario);
             TipoReceita tipoReceita = trdao.buscarTipoReceita(categoriaReceita);

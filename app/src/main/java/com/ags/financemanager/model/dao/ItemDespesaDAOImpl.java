@@ -1,4 +1,4 @@
-package model.dao;
+package com.ags.financemanager.model.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,21 +7,22 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 
-import model.DBContract;
-import model.DatabaseAccess;
-import model.bean.Despesa;
-import model.bean.ItemDespesa;
+import com.ags.financemanager.model.DBContract;
+import com.ags.financemanager.model.DatabaseAccess;
+import com.ags.financemanager.model.bean.Despesa;
+import com.ags.financemanager.model.bean.ItemDespesa;
 
 /**
  * Created by Maikon Igor on 29/09/2016.
  */
 
-public class ItemDespesaDAO extends DatabaseAccess {
+public class ItemDespesaDAOImpl extends DatabaseAccess implements ItemDespesaDAO {
 
-    public ItemDespesaDAO(Context context) {
+    public ItemDespesaDAOImpl(Context context) {
         super(context);
     }
 
+    @Override
     public long inserirItemDespesa(ItemDespesa item){
         ContentValues values = new ContentValues();
         values.put(DBContract.ItemDespesaTable.COL_ID_DESPESA, item.getDespesa().getId());
@@ -33,7 +34,8 @@ public class ItemDespesaDAO extends DatabaseAccess {
         return insertedId;
     }
 
-    public ArrayList<ItemDespesa> buscarItemDespesaPorData(int dataInicial, int dataFinal){
+    @Override
+    public ArrayList<ItemDespesa> buscarItemDespesaPorData(long dataInicial, long dataFinal){
         ArrayList<ItemDespesa> itemDespesas = new ArrayList<ItemDespesa>();
 
         String colunas[]={
@@ -59,7 +61,7 @@ public class ItemDespesaDAO extends DatabaseAccess {
             int valor = cursor.getInt(cursor
                     .getColumnIndex(DBContract.ItemDespesaTable.COL_VALOR));
 
-            DespesaDAO ddao = new DespesaDAO(getContext());
+            DespesaDAOImpl ddao = new DespesaDAOImpl(getContext());
             Despesa despesa = ddao.buscarDespesa(idDespesa);
 
             ItemDespesa item = new ItemDespesa(id, despesa,data,valor);
@@ -68,6 +70,7 @@ public class ItemDespesaDAO extends DatabaseAccess {
         return itemDespesas;
     }
 
+    @Override
     public ItemDespesa buscarItemDespesa(long idItem){
         ItemDespesa itemDespesa = null;
 
@@ -94,7 +97,7 @@ public class ItemDespesaDAO extends DatabaseAccess {
             int valor = cursor.getInt(cursor
                     .getColumnIndex(DBContract.ItemDespesaTable.COL_VALOR));
 
-            DespesaDAO ddao = new DespesaDAO(getContext());
+            DespesaDAOImpl ddao = new DespesaDAOImpl(getContext());
             Despesa despesa = ddao.buscarDespesa(idDespesa);
 
             itemDespesa = new ItemDespesa(id, despesa,data,valor);

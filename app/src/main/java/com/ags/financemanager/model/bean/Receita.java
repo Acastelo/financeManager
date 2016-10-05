@@ -1,4 +1,6 @@
-package model.bean;
+package com.ags.financemanager.model.bean;
+
+import java.util.Date;
 
 /**
  * Created by Maikon Igor on 28/09/2016.
@@ -8,7 +10,8 @@ public class Receita {
 
     private long id;
     private String descricao;
-    private int data;
+    private long data;
+    private Date dataAsDate;
     private float valor;
     private TipoReceita tipoReceita;
     private Usuario usuario;
@@ -42,12 +45,22 @@ public class Receita {
         this.descricao = descricao;
     }
 
-    public int getData() {
+    public long getData() {
         return data;
     }
 
-    public void setData(int data) {
+    public void setData(long data) {
         this.data = data;
+        this.dataAsDate = new Date(data);
+    }
+
+    public Date getDataAsDate() {
+        return this.dataAsDate;
+    }
+
+    public void setDataAsDate(Date dataAsDate) {
+        this.dataAsDate = dataAsDate;
+        this.data = dataAsDate.getTime();
     }
 
     public float getValor() {

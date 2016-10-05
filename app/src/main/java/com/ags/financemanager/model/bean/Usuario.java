@@ -1,4 +1,4 @@
-package model.bean;
+package com.ags.financemanager.model.bean;
 
 /**
  * Created by Maikon Igor on 28/09/2016.

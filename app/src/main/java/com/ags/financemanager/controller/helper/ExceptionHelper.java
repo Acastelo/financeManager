@@ -16,6 +16,6 @@ public class ExceptionHelper {
     }
 
     public ControllerException getNewConsultarControllerException(Exception e) {
-        return new ControllerException("Houve um erro ao tentar realizar a consulta. " + e);
+        return new ControllerException("Houve um erro ao tentar realizar a consulta.", e);
     }
 }

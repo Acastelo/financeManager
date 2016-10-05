@@ -1,4 +1,4 @@
-package model;
+package com.ags.financemanager.model;
 
 /**
  * Created by Maikon Igor on 28/09/2016.
