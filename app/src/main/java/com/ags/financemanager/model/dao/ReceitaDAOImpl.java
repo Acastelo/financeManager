@@ -122,4 +122,10 @@ public class ReceitaDAOImpl extends DatabaseAccess implements ReceitaDAO {
         }
         return receita;
     }
+
+    @Override
+    public boolean excluirReceita(Receita receita) {
+        String where = DBContract.ReceitaTable.COL_ID + " = " + receita.getId();
+        return getDb().delete(DBContract.ReceitaTable.TABLE_NAME,where,null) > 0;
+    }
 }

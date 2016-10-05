@@ -7,6 +7,9 @@ import com.ags.financemanager.model.DBContract;
 import com.ags.financemanager.model.DatabaseAccess;
 import com.ags.financemanager.model.bean.TipoDespesa;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Maikon Igor on 29/09/2016.
  */
@@ -37,5 +40,28 @@ public class TipoDespesaDAOImpl extends DatabaseAccess implements TipoDespesaDAO
             tipo = new TipoDespesa(idTipo,desc);
         }
         return tipo;
+    }
+
+    @Override
+    public List<TipoDespesa> getTodos() {
+
+        List<TipoDespesa> tipos = new ArrayList<TipoDespesa>();
+        String colunas[] = {
+                DBContract.TipoDespesaTable.COL_ID,
+                DBContract.TipoDespesaTable.COL_DESCRICAO
+        };
+        Cursor cursor;
+
+        cursor = getDb().query(DBContract.TipoDespesaTable.TABLE_NAME, colunas, null,null,null,null,null);
+        while (cursor.moveToNext()){
+            long idTipo = cursor.getLong(cursor
+                    .getColumnIndex(DBContract.TipoDespesaTable.COL_ID));
+            String desc = cursor.getString(cursor
+                    .getColumnIndex(DBContract.TipoDespesaTable.COL_DESCRICAO));
+
+           TipoDespesa tipo = new TipoDespesa(idTipo,desc);
+            tipos.add(tipo);
+        }
+        return tipos;
     }
 }

@@ -12,4 +12,6 @@ public interface UsuarioDAO {
     Usuario buscarUsuario(long idusuario);
 
     boolean updateUsuario(Usuario usuario);
+
+    boolean excluirUsuario(Usuario usuario);
 }

@@ -11,5 +11,5 @@ public interface DespesaDAO {
 
     Despesa buscarDespesa(long idDespesa);
 
-    void excluirDespesa(Despesa despesa);
+    boolean excluirDespesa(Despesa despesa);
 }

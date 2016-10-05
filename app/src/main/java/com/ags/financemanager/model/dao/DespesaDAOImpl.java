@@ -70,4 +70,9 @@ public class DespesaDAOImpl extends DatabaseAccess implements DespesaDAO {
         }
         return despesas;
     }
+
+    public boolean excluirDespesa(Despesa despesa) {
+        String whereClause = DBContract.DespesaTable.COL_ID + " = " + despesa.getId();
+        return getDb().delete(DBContract.DespesaTable.TABLE_NAME, whereClause, null) > 0;
+    }
 }

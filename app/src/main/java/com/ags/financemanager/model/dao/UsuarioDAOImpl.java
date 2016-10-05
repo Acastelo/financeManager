@@ -80,4 +80,10 @@ public class UsuarioDAOImpl extends DatabaseAccess implements UsuarioDAO {
 
         return affectedRows != 0;
     }
+
+    @Override
+    public boolean excluirUsuario(Usuario usuario) {
+        String where = DBContract.UsuarioTable.COL_ID +" = "+ usuario.getId();
+        return getDb().delete(DBContract.UsuarioTable.TABLE_NAME,where,null) > 0;
+    }
 }
