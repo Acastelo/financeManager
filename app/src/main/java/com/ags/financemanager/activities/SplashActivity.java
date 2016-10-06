@@ -61,9 +61,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        /*Handler h = new Handler();
-        h.postDelayed(this, 1500);*/
-
+            new HttpRequestTask().execute();
     }
 
     public void startLogin(){
