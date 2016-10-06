@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.ags.financemanager.R;
 import com.ags.financemanager.controller.servicos.DespesaServico;
+import com.ags.financemanager.controller.servicos.ReceitaServico;
 
 public class SplashActivity extends AppCompatActivity implements Runnable{
 
@@ -22,8 +23,8 @@ public class SplashActivity extends AppCompatActivity implements Runnable{
 
     @Override
     public void run() {
-        DespesaServico serv = new DespesaServico(getApplicationContext());
-        serv.buscarDespesa(1);
+        ReceitaServico s = new ReceitaServico(getApplicationContext());
+        s.listarReceitas();
         startLogin();
         finish();
     }
