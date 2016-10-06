@@ -1,15 +1,20 @@
 package com.ags.financemanager.model.bean;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Maikon Igor on 28/09/2016.
  */
 
-public class Receita {
+public class Receita implements Serializable{
 
+    @SerializedName("id_receita")
     private long id;
     private String descricao;
+    @SerializedName("datetime")
     private long data;
     private Date dataAsDate;
     private float valor;
