@@ -1,12 +1,13 @@
 package com.ags.financemanager.controller.servicos;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.ags.financemanager.controller.Callback;
 import com.ags.financemanager.model.bean.Usuario;
 import com.google.gson.Gson;
-import com.loopj.android.http.*;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -111,11 +112,12 @@ public class UsuarioServico {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
-                           callback.sucesso();
+                            callback.sucesso();
                         }
+
                         @Override
                         public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                           callback.erro();
+                            callback.erro();
                         }
                     });
         } catch (UnsupportedEncodingException e) {
