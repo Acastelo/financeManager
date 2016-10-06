@@ -16,4 +16,5 @@ public interface DespesaController extends BaseController<Despesa> {
     void excluir(Despesa despesa);
 
     void excluirTodos(List<Despesa> despesas);
+
 }
