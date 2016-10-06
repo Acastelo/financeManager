@@ -1,10 +1,16 @@
 package com.ags.financemanager.model.bean;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
 /**
  * Created by Maikon Igor on 28/09/2016.
  */
 
-public class TipoDespesa {
+public class TipoDespesa implements Serializable{
+
+    @SerializedName("idtipo_despesa")
     private long id;
     private String descricao;
 
