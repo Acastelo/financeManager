@@ -9,6 +9,9 @@ import com.ags.financemanager.model.DBContract;
 import com.ags.financemanager.model.DatabaseAccess;
 import com.ags.financemanager.model.bean.Usuario;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Maikon Igor on 29/09/2016.
  */
@@ -61,6 +64,35 @@ public class UsuarioDAOImpl extends DatabaseAccess implements UsuarioDAO {
     }
 
     @Override
+    public Usuario buscarUsuarioByEmail(String mail) {
+        String colunas[]={
+                DBContract.UsuarioTable.COL_ID,
+                DBContract.UsuarioTable.COL_NOME,
+                DBContract.UsuarioTable.COL_EMAIL,
+                DBContract.UsuarioTable.COL_SENHA
+        };
+
+        Cursor cursor;
+        String clausula = DBContract.UsuarioTable.COL_EMAIL + " = '"
+                + mail + "'";
+        cursor = getDb().query(DBContract.UsuarioTable.TABLE_NAME, colunas, clausula,null,null,null,null);
+        Usuario usuario = null;
+        while (cursor.moveToNext()){
+            long id = cursor.getLong(cursor
+                    .getColumnIndex(DBContract.UsuarioTable.COL_ID));
+            String nome = cursor.getString(cursor
+                    .getColumnIndex(DBContract.UsuarioTable.COL_NOME));
+            String email = cursor.getString(cursor
+                    .getColumnIndex(DBContract.UsuarioTable.COL_EMAIL));
+            String senha = cursor.getString(cursor
+                    .getColumnIndex(DBContract.UsuarioTable.COL_SENHA));
+
+            usuario = new Usuario(id, nome,email,senha);
+        }
+        return usuario;
+    }
+
+    @Override
     public boolean updateUsuario(Usuario usuario){
         String colunas[]={
                 DBContract.UsuarioTable.COL_ID,
@@ -85,5 +117,34 @@ public class UsuarioDAOImpl extends DatabaseAccess implements UsuarioDAO {
     public boolean excluirUsuario(Usuario usuario) {
         String where = DBContract.UsuarioTable.COL_ID +" = "+ usuario.getId();
         return getDb().delete(DBContract.UsuarioTable.TABLE_NAME,where,null) > 0;
+    }
+
+    @Override
+    public List<Usuario> getTodos() {
+        List<Usuario> tipos = new ArrayList<Usuario>();
+        String colunas[]={
+                DBContract.UsuarioTable.COL_ID,
+                DBContract.UsuarioTable.COL_NOME,
+                DBContract.UsuarioTable.COL_EMAIL,
+                DBContract.UsuarioTable.COL_SENHA
+        };
+
+        Cursor cursor;
+        cursor = getDb().query(DBContract.UsuarioTable.TABLE_NAME, colunas, null,null,null,null,null);
+        Usuario usuario = null;
+        while (cursor.moveToNext()){
+            long id = cursor.getLong(cursor
+                    .getColumnIndex(DBContract.UsuarioTable.COL_ID));
+            String nome = cursor.getString(cursor
+                    .getColumnIndex(DBContract.UsuarioTable.COL_NOME));
+            String email = cursor.getString(cursor
+                    .getColumnIndex(DBContract.UsuarioTable.COL_EMAIL));
+            String senha = cursor.getString(cursor
+                    .getColumnIndex(DBContract.UsuarioTable.COL_SENHA));
+
+            usuario = new Usuario(id, nome,email,senha);
+            tipos.add(usuario);
+        }
+        return tipos;
     }
 }

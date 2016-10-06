@@ -24,7 +24,7 @@ public class SafeMoneyDBHelper extends SQLiteOpenHelper {
                     DBContract.ReceitaTable.COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"+
                     DBContract.ReceitaTable.COL_DESCRICAO + TEXT_TYPE + COMMA_SEP +
                     DBContract.ReceitaTable.COL_DATA +  INT_TYPE + COMMA_SEP +
-                    DBContract.ReceitaTable.COL_VALOR + REAL_TYPE +
+                    DBContract.ReceitaTable.COL_VALOR + REAL_TYPE + COMMA_SEP +
                     DBContract.ReceitaTable.COL_ID_USUARIO + INT_TYPE + COMMA_SEP+
                     DBContract.ReceitaTable.COL_ID_CATEGORIA_RECEITA + INT_TYPE + COMMA_SEP+
                     " FOREIGN KEY ("+ DBContract.ReceitaTable.COL_ID_USUARIO +") REFERENCES "+ DBContract.UsuarioTable.TABLE_NAME +"("+DBContract.UsuarioTable.COL_ID+")"+ COMMA_SEP +
@@ -72,17 +72,11 @@ public class SafeMoneyDBHelper extends SQLiteOpenHelper {
 
     private static final String SQL_INSERT_TIPO_DESPESA =
             "INSERT INTO "+ DBContract.TipoDespesaTable.TABLE_NAME + " ("+DBContract.TipoDespesaTable.COL_DESCRICAO +") "+
-                    "VALUES('LAZER'), "+
-                    "VALUES('ALIMENTACAO'), "+
-                    "VALUES('EDUCACAO'), "+
-                    "VALUES('SAUDE')";
+                    "VALUES('LAZER')";
 
     private static final String SQL_INSERT_TIPO_RECEITA =
             "INSERT INTO "+ DBContract.TipoReceitaaTable.TABLE_NAME + " ("+DBContract.TipoReceitaaTable.COL_DESCRICAO +") "+
-                    "VALUES('SALARIO'), "+
-                    "VALUES('INVESTIMENTOS'), "+
-                    "VALUES('FREELANCERS'), "+
-                    "VALUES('VENDAS')";
+                    "VALUES('SALARIO')";
 
     private SafeMoneyDBHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -102,8 +96,8 @@ public class SafeMoneyDBHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_ITEM_DESPESA);
         db.execSQL(SQL_CREATE_TIPO_DESPESA);
         db.execSQL(SQL_CREATE_TIPO_RECEITA);
-        db.execSQL(SQL_INSERT_TIPO_DESPESA);
-        db.execSQL(SQL_INSERT_TIPO_RECEITA);
+        //db.execSQL(SQL_INSERT_TIPO_DESPESA);
+        //db.execSQL(SQL_INSERT_TIPO_RECEITA);
     }
 
     @Override
