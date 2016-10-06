@@ -1,7 +1,9 @@
 package com.ags.financemanager.model.dao;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.ags.financemanager.model.DBContract;
 import com.ags.financemanager.model.DatabaseAccess;
@@ -17,6 +19,15 @@ import java.util.List;
 public class TipoDespesaDAOImpl extends DatabaseAccess implements TipoDespesaDAO {
     public TipoDespesaDAOImpl(Context context) {
         super(context);
+    }
+
+    @Override
+    public void inserirTipoDespesa(TipoDespesa tipoDespesa) {
+        ContentValues values = new ContentValues();
+        values.put(DBContract.TipoDespesaTable.COL_ID, tipoDespesa.getId());
+        values.put(DBContract.TipoDespesaTable.COL_DESCRICAO, tipoDespesa.getDescricao());
+        long insertedId = getDb().insertWithOnConflict(DBContract.TipoDespesaTable.TABLE_NAME, null, values,
+                SQLiteDatabase.CONFLICT_REPLACE);
     }
 
     @Override

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.ags.financemanager.model.bean.Receita;
+import com.ags.financemanager.model.dao.ReceitaDAO;
+import com.ags.financemanager.model.dao.ReceitaDAOImpl;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -37,7 +39,7 @@ public class ReceitaServico {
         AsyncHttpClient client = new AsyncHttpClient();
         String url = "http://safemoney-onhandcs.rhcloud.com/safemoney/apirest/receita/listar";
         final Gson gson = new Gson();
-
+        final ReceitaDAO rDao = new ReceitaDAOImpl(context);
         client.get(url, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray array) {
@@ -45,6 +47,7 @@ public class ReceitaServico {
                     for (int i = 0; i< array.length(); i++){
                         JSONObject item = array.getJSONObject(i);
                         Receita receita = gson.fromJson(String.valueOf(item), Receita.class);
+                        rDao.inserirReceita(receita);
                         receitas.add(receita);
                     }
                 } catch (JSONException e) {
