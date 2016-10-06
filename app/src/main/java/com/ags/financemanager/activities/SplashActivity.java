@@ -4,12 +4,9 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.ags.financemanager.R;
+import com.ags.financemanager.controller.servicos.DespesaServico;
 
 public class SplashActivity extends AppCompatActivity implements Runnable{
 
@@ -25,6 +22,8 @@ public class SplashActivity extends AppCompatActivity implements Runnable{
 
     @Override
     public void run() {
+        DespesaServico serv = new DespesaServico(getApplicationContext());
+        serv.buscarDespesa(1);
         startLogin();
         finish();
     }
