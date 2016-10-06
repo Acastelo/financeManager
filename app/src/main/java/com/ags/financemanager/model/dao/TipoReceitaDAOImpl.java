@@ -1,7 +1,9 @@
 package com.ags.financemanager.model.dao;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.ags.financemanager.model.DBContract;
 import com.ags.financemanager.model.DatabaseAccess;
@@ -18,6 +20,17 @@ public class TipoReceitaDAOImpl extends DatabaseAccess implements TipoReceitaDAO
 
     public TipoReceitaDAOImpl(Context context) {
         super(context);
+    }
+
+    @Override
+    public long inserirTipoReceita(TipoReceita tipoReceita){
+        ContentValues values = new ContentValues();
+        values.put(DBContract.UsuarioTable.COL_NOME, tipoReceita.getDescricao());
+
+        long insertedId = getDb().insertWithOnConflict(DBContract.TipoReceitaaTable.TABLE_NAME, null, values,
+                SQLiteDatabase.CONFLICT_REPLACE);
+
+        return insertedId;
     }
 
     public TipoReceita buscarTipoReceita(long id){

@@ -11,4 +11,5 @@ public interface TipoReceitaDAO {
 
     TipoReceita buscarTipoReceita(long id);
     List<TipoReceita> getTodos();
+    long inserirTipoReceita(TipoReceita tipo);
 }
