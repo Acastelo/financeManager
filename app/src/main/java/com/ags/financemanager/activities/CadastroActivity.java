@@ -45,7 +45,6 @@ public class CadastroActivity extends AppCompatActivity {
         btCriar.setOnClickListener(new BtnCriarListener());
         txtLogin = (TextView)findViewById(R.id.link_login);
         txtLogin.setOnClickListener(new TxtLoginListener());
-
     }
 
     private class BtnCriarListener implements View.OnClickListener{
