@@ -3,8 +3,9 @@ package com.ags.financemanager.controller.servicos;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.ags.financemanager.controller.Callback;
 import com.ags.financemanager.model.bean.Usuario;
-import com.ags.financemanager.model.dao.UsuarioDAOImpl;
+import com.google.gson.Gson;
 import com.loopj.android.http.*;
 
 import org.json.JSONArray;
@@ -14,10 +15,12 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
 
 
 /**
@@ -92,5 +95,29 @@ public class UsuarioServico {
             e.printStackTrace();
         }
         return usuario;
+    }
+
+    public void cadastrarUsuario(Usuario usuario, final Callback callback){
+        AsyncHttpClient client = new AsyncHttpClient();
+        Gson gson = new Gson();
+        String jsonBody = gson.toJson(usuario);
+        String url = "http://safemoney-onhandcs.rhcloud.com/safemoney/apirest/usuario/cadastrar";
+        try {
+            StringEntity entity = new StringEntity(jsonBody);
+            client.post(context, url, entity, "application/json",
+                    new AsyncHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+                           callback.sucesso();
+                        }
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                           callback.erro();
+                        }
+                    });
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 }
