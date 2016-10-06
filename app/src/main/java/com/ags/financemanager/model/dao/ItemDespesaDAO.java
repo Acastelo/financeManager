@@ -1,7 +1,9 @@
 package com.ags.financemanager.model.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import com.ags.financemanager.model.bean.Despesa;
 import com.ags.financemanager.model.bean.ItemDespesa;
 
 /**
@@ -14,4 +16,10 @@ public interface ItemDespesaDAO {
     ArrayList<ItemDespesa> buscarItemDespesaPorData(long dataInicial, long dataFinal);
 
     ItemDespesa buscarItemDespesa(long idItem);
+
+    List<ItemDespesa> getTodos();
+
+    List<ItemDespesa> buscarItemDespesaPorDespesa(Despesa despesa);
+
+    void excluirItemDespesa(ItemDespesa itemDespesa);
 }

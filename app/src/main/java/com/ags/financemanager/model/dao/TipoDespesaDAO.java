@@ -12,4 +12,6 @@ public interface TipoDespesaDAO {
     TipoDespesa buscarTipoDespesa(long idTipoDespesa);
 
     List<TipoDespesa> getTodos();
+
+    void inserirTipoDespesa(TipoDespesa tipoDespesa);
 }

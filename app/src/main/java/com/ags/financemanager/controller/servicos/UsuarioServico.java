@@ -3,8 +3,10 @@ package com.ags.financemanager.controller.servicos;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.ags.financemanager.model.bean.Despesa;
 import com.ags.financemanager.model.bean.Usuario;
 import com.ags.financemanager.model.dao.UsuarioDAOImpl;
+import com.google.gson.Gson;
 import com.loopj.android.http.*;
 
 import org.json.JSONArray;
@@ -16,6 +18,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -92,5 +96,34 @@ public class UsuarioServico {
             e.printStackTrace();
         }
         return usuario;
+    }
+
+    public List<Usuario> listarUsuarios() {
+
+        final List<Usuario> usuarios = new ArrayList<Usuario>();
+        AsyncHttpClient client = new AsyncHttpClient();
+        String url = "http://safemoney-onhandcs.rhcloud.com/safemoney/apirest/usuario/listar";
+        final Gson gson = new Gson();
+        client.get(url, new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray array) {
+                try{
+                    for (int i = 0; i< array.length(); i++){
+                        JSONObject item = array.getJSONObject(i);
+                        Usuario usuario = gson.fromJson(String.valueOf(item), Usuario.class);
+                        usuarios.add(usuario);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+        });
+
+        return usuarios;
     }
 }

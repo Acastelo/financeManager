@@ -52,4 +52,10 @@ public class ItemDespesa{
     public void setValor(float valor) {
         this.valor = valor;
     }
+
+    public void validarId() {
+        if (getId() <= 0)
+            throw new IllegalArgumentException("ID inválido.");
+
+    }
 }

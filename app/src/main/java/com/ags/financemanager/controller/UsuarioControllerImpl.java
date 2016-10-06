@@ -1,4 +1,5 @@
 package com.ags.financemanager.controller;
+
 import android.content.Context;
 
 import com.ags.financemanager.controller.exception.ControllerException;
@@ -6,6 +7,7 @@ import com.ags.financemanager.controller.helper.ExceptionHelper;
 import com.ags.financemanager.controller.servicos.UsuarioServico;
 import com.ags.financemanager.model.bean.Usuario;
 import com.ags.financemanager.model.dao.UsuarioDAO;
+import com.ags.financemanager.model.dao.UsuarioDAOImpl;
 
 import java.util.List;
 
@@ -32,6 +34,11 @@ public class UsuarioControllerImpl extends BaseControllerImpl<Usuario> implement
 
     }
 
+    public UsuarioControllerImpl(Context contexto) {
+        this.contexto = contexto;
+        this.usuarioDAO = new UsuarioDAOImpl(contexto);
+        this.exceptionHelper = new ExceptionHelper();
+    }
 
     private void validarDAO() {
         if (usuarioDAO == null)
@@ -67,26 +74,54 @@ public class UsuarioControllerImpl extends BaseControllerImpl<Usuario> implement
 
         count = usuarioDAO.getTodos().size();
 
-        if (count > 0){
+        if (count > 0) {
 
             usuario = usuarioDAO.buscarUsuarioByEmail(email);
 
-            if (usuario.getSenha().equals(senha)){
+            if (usuario.getSenha().equals(senha)) {
                 retorno = true;
-            }else
-            {retorno = false;}
-        }else {
+            } else {
+                retorno = false;
+            }
+        } else {
             UsuarioServico serv = new UsuarioServico(contexto);
             usuario = serv.login(email);
 
             usuarioDAO.inserirUsuario(usuario);
 
-            if (usuario.getSenha().equals(senha)){
+            if (usuario.getSenha().equals(senha)) {
                 retorno = true;
-            }else
-            {retorno = false;}
+            } else {
+                retorno = false;
+            }
         }
 
         return retorno;
+    }
+
+    @Override
+    public void sincronizar() {
+
+        try {
+            validarDAO();
+            int count = usuarioDAO.getTodos().size();
+
+            if (count == 0) {
+
+                UsuarioServico servico = new UsuarioServico(contexto);
+                List<Usuario> usuarios = servico.listarUsuarios();
+
+                for (Usuario usuario : usuarios) {
+                    salvar(usuario);
+                }
+
+            }
+        } catch (Exception e) {
+            if (e instanceof ControllerException)
+                throw e;
+
+            throw exceptionHelper.getNewSincronizacaoControllerException(e);
+        }
+
     }
 }

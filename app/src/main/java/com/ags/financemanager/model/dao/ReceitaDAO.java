@@ -1,6 +1,7 @@
 package com.ags.financemanager.model.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.ags.financemanager.model.bean.Receita;
 
@@ -16,4 +17,6 @@ public interface ReceitaDAO {
     Receita buscarReceita(long idReceita);
 
     boolean excluirReceita(Receita receita);
+
+    List<Receita> getTodos();
 }

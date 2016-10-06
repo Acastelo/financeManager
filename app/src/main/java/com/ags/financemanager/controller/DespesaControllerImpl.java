@@ -1,10 +1,14 @@
 package com.ags.financemanager.controller;
 
+import android.content.Context;
+
 import com.ags.financemanager.controller.business.ValidadorData;
 import com.ags.financemanager.controller.exception.ControllerException;
 import com.ags.financemanager.controller.helper.ExceptionHelper;
+import com.ags.financemanager.controller.servicos.DespesaServico;
 import com.ags.financemanager.model.bean.Despesa;
 import com.ags.financemanager.model.dao.DespesaDAO;
+import com.ags.financemanager.model.dao.DespesaDAOImpl;
 
 import java.util.List;
 
@@ -16,9 +20,18 @@ public class DespesaControllerImpl extends BaseControllerImpl<Despesa> implement
     private DespesaDAO despesaDAO;
     private ExceptionHelper exceptionHelper;
     private ValidadorData validadorData;
+    private Context context;
 
-    public DespesaControllerImpl(DespesaDAO despesaDAO) {
+    public DespesaControllerImpl(DespesaDAO despesaDAO, Context context) {
         this.despesaDAO = despesaDAO;
+        this.context = context;
+        this.exceptionHelper = new ExceptionHelper();
+        this.validadorData = new ValidadorData();
+    }
+
+    public DespesaControllerImpl(Context context) {
+        this.context = context;
+        this.despesaDAO = new DespesaDAOImpl(context);
         this.exceptionHelper = new ExceptionHelper();
         this.validadorData = new ValidadorData();
     }
@@ -134,6 +147,30 @@ public class DespesaControllerImpl extends BaseControllerImpl<Despesa> implement
             } catch (Exception e) {
                 throw e;
             }
+        }
+    }
+
+    @Override
+    public void sincronizar() {
+
+        try {
+
+            validarDAO();
+            int qtd = despesaDAO.getTodos().size();
+
+            if(qtd == 0) {
+
+                DespesaServico servico = new DespesaServico(this.context);
+                List<Despesa> despesaList = servico.listarDespesas();
+                salvarTodos(despesaList);
+
+            }
+
+        } catch (Exception e) {
+            if (e instanceof ControllerException)
+                throw e;
+
+            throw exceptionHelper.getNewSincronizacaoControllerException(e);
         }
     }
 }

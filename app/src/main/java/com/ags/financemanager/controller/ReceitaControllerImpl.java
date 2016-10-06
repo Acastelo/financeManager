@@ -1,10 +1,15 @@
 package com.ags.financemanager.controller;
 
+import android.content.Context;
+
 import com.ags.financemanager.controller.business.ValidadorData;
 import com.ags.financemanager.controller.exception.ControllerException;
 import com.ags.financemanager.controller.helper.ExceptionHelper;
+import com.ags.financemanager.controller.servicos.DespesaServico;
+import com.ags.financemanager.model.bean.Despesa;
 import com.ags.financemanager.model.bean.Receita;
 import com.ags.financemanager.model.dao.ReceitaDAO;
+import com.ags.financemanager.model.dao.ReceitaDAOImpl;
 
 import java.util.Date;
 import java.util.List;
@@ -17,9 +22,18 @@ public class ReceitaControllerImpl extends BaseControllerImpl<Receita> implement
     private ReceitaDAO receitaDAO;
     private ExceptionHelper exceptionHelper;
     private ValidadorData validadorData;
+    private Context context;
 
-    public ReceitaControllerImpl(ReceitaDAO receitaDAO) {
+    public ReceitaControllerImpl(ReceitaDAO receitaDAO, Context context) {
         this.receitaDAO = receitaDAO;
+        this.context = context;
+        this.exceptionHelper = new ExceptionHelper();
+        this.validadorData = new ValidadorData();
+    }
+
+    public ReceitaControllerImpl(Context context) {
+        this.context = context;
+        this.receitaDAO = new ReceitaDAOImpl(context);
         this.exceptionHelper = new ExceptionHelper();
         this.validadorData = new ValidadorData();
     }
@@ -157,6 +171,29 @@ public class ReceitaControllerImpl extends BaseControllerImpl<Receita> implement
             } catch (Exception e) {
                 throw e;
             }
+        }
+    }
+
+    @Override
+    public void sincronizar() {
+        try {
+
+            validarDAO();
+            int qtd = receitaDAO.getTodos().size();
+
+            if (qtd == 0) {
+
+                ReceitaServico servico = new ReceitaServico(this.context);
+                List<Receita> receitaList = servico.listarReceitas();
+                salvarTodos(receitaList);
+
+            }
+
+        } catch (Exception e) {
+            if (e instanceof ControllerException)
+                throw e;
+
+            throw exceptionHelper.getNewSincronizacaoControllerException(e);
         }
     }
 
