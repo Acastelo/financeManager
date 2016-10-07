@@ -19,14 +19,35 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ags.financemanager.R;
+import com.ags.financemanager.controller.UsuarioControllerImpl;
+import com.ags.financemanager.controller.exception.ControllerException;
+import com.ags.financemanager.model.bean.Usuario;
 
 public class CadastroActivity extends AppCompatActivity {
     private TextView txtLogin;
+    private EditText edtNome;
+    private EditText edtEmail;
+    private EditText edtSenha;
+    private Button btnCriaConta;
+    private Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
+
+        edtNome = (EditText)findViewById(R.id.cad_nome);
+        edtEmail = (EditText)findViewById(R.id.cad_email);
+        edtSenha = (EditText)findViewById(R.id.cad_senha);
+
+        String nome = edtNome.getText().toString();
+        String email = edtEmail.getText().toString();
+        String senha = edtSenha.getText().toString();
+
+        usuario = new Usuario(nome, email, senha);
+
+        btnCriaConta = (Button)findViewById(R.id.btn_cria_conta);
+        btnCriaConta.setOnClickListener(new BtnCriaContaListener());
 
         txtLogin = (TextView)findViewById(R.id.link_login);
         txtLogin.setOnClickListener(new TxtLoginListener());
@@ -37,8 +58,25 @@ public class CadastroActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+            Intent login = new Intent(getApplicationContext(), ListaActivity.class);
             startActivity(login);
+        }
+    }
+
+    private class BtnCriaContaListener implements View.OnClickListener{
+        private UsuarioControllerImpl controller;
+
+        @Override
+        public void onClick(View v) {
+            try {
+                controller.salvar(usuario);
+                Toast.makeText(CadastroActivity.this, "Usuário Cadastrado com sucesso.", Toast.LENGTH_LONG);
+            }catch (ControllerException e){
+                e.printStackTrace();
+                Toast.makeText(CadastroActivity.this, "Usuário não cadastrado.", Toast.LENGTH_LONG);
+            }
+
+
         }
     }
 }
