@@ -76,21 +76,13 @@ public class UsuarioServico {
 
     public Usuario login(String emailUsuario) {
 
-        final Usuario usuario = new Usuario("", "", "");
+        Usuario usuario = new Usuario("", "", "");
 
         try {
 
             JSONObject response = getJSONObjectFromURL("http://safemoney-onhandcs.rhcloud.com/safemoney/apirest/usuario/logar/" + emailUsuario);
-
-            long idUsuario = response.getLong("idUsuario");
-            String senha = response.getString("senha");
-            String email = response.getString("email");
-            String nome = response.getString("nome");
-
-            usuario.setEmail(email);
-            usuario.setId(idUsuario);
-            usuario.setNome(nome);
-            usuario.setSenha(senha);
+            Gson gson = new Gson();
+            usuario = gson.fromJson(String.valueOf(response), Usuario.class);
 
         } catch (IOException e) {
             e.printStackTrace();

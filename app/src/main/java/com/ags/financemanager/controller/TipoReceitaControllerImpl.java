@@ -5,6 +5,8 @@ import android.content.Context;
 import com.ags.financemanager.controller.exception.ControllerException;
 import com.ags.financemanager.controller.helper.ExceptionHelper;
 import com.ags.financemanager.controller.servicos.TipoReceitaServico;
+import com.ags.financemanager.controller.servicos.UsuarioServico;
+import com.ags.financemanager.controller.servicos.TipoReceitaServico;
 import com.ags.financemanager.model.bean.TipoReceita;
 import com.ags.financemanager.model.dao.TipoReceitaDAO;
 import com.ags.financemanager.model.dao.TipoReceitaDAOImpl;
@@ -33,6 +35,28 @@ public class TipoReceitaControllerImpl extends BaseControllerImpl<TipoReceita> i
         this.tipoReceitaDAO = new TipoReceitaDAOImpl(context);
         this.exceptionHelper = new ExceptionHelper();
         this.tipoReceitaServico = new TipoReceitaServico(this.context);
+    }
+
+    @Override
+    public void salvarTodos(List<TipoReceita> tipos) {
+
+        TipoReceita tipo = null;
+
+        try {
+
+            validarDAO();
+
+            for (TipoReceita t : tipos) {
+
+                tipoReceitaDAO.inserirTipoReceita(t);
+            }
+
+        } catch (Exception e) {
+            if (e instanceof ControllerException)
+                throw e;
+
+            throw exceptionHelper.getNewSalvarControllerException(tipo, e);
+        }
     }
 
     @Override

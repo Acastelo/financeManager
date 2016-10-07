@@ -87,6 +87,7 @@ public class DespesaServico {
 
     public void cadastrarDespesa(Despesa despesa, final Callback callback){
         AsyncHttpClient client = new AsyncHttpClient();
+
         Gson gson = new Gson();
         String jsonBody = gson.toJson(despesa);
         String url = "http://safemoney-onhandcs.rhcloud.com/safemoney/apirest/despesa/cadastrar";
