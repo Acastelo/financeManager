@@ -3,7 +3,10 @@ package com.ags.financemanager.controller.servicos;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.ags.financemanager.controller.Callback;
 import com.ags.financemanager.model.bean.Despesa;
+import com.ags.financemanager.model.dao.DespesaDAO;
+import com.ags.financemanager.model.dao.DespesaDAOImpl;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -34,6 +37,7 @@ public class DespesaServico {
 
     public List<Despesa> listarDespesas(){
         final List<Despesa> despesas = new ArrayList<Despesa>();
+        final DespesaDAO dDao = new DespesaDAOImpl(context);
         AsyncHttpClient client = new AsyncHttpClient();
         String url = "http://safemoney-onhandcs.rhcloud.com/safemoney/apirest/despesa/listar";
         final Gson gson = new Gson();
@@ -44,6 +48,7 @@ public class DespesaServico {
                     for (int i = 0; i< array.length(); i++){
                         JSONObject item = array.getJSONObject(i);
                         Despesa despesa = gson.fromJson(String.valueOf(item), Despesa.class);
+                        dDao.inserirDespesa(despesa);
                         despesas.add(despesa);
                     }
                 } catch (JSONException e) {
@@ -80,7 +85,7 @@ public class DespesaServico {
         return despesa.get(0);
     }
 
-    public void cadastrarDespesa(Despesa despesa){
+    public void cadastrarDespesa(Despesa despesa, final Callback callback){
         AsyncHttpClient client = new AsyncHttpClient();
 
         Gson gson = new Gson();
@@ -93,11 +98,11 @@ public class DespesaServico {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
-                            Toast.makeText(context,"Sucess",Toast.LENGTH_LONG).show();
+                           callback.sucesso();
                         }
                         @Override
                         public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                            Toast.makeText(context,"Failure",Toast.LENGTH_LONG).show();
+                            callback.erro();
                         }
                     });
         } catch (UnsupportedEncodingException e) {
@@ -105,19 +110,19 @@ public class DespesaServico {
         }
     }
 
-    public void excluirDespesa(long idDespesa){
+    public void excluirDespesa(long idDespesa, final Callback callback){
         AsyncHttpClient client = new AsyncHttpClient();
         String url = "http://safemoney-onhandcs.rhcloud.com/safemoney/apirest/despesa/excluir/"+idDespesa;
         client.get(url, new AsyncHttpResponseHandler(){
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                Toast.makeText(context,"Sucess",Toast.LENGTH_LONG).show();
+               callback.sucesso();
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Toast.makeText(context,"Sucess",Toast.LENGTH_LONG).show();
+               callback.erro();
             }
         });
     }

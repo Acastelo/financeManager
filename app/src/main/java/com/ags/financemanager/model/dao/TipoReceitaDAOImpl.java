@@ -23,14 +23,12 @@ public class TipoReceitaDAOImpl extends DatabaseAccess implements TipoReceitaDAO
     }
 
     @Override
-    public long inserirTipoReceita(TipoReceita tipoReceita){
+    public void inserirTipoReceita(TipoReceita tipo) {
         ContentValues values = new ContentValues();
-        values.put(DBContract.UsuarioTable.COL_NOME, tipoReceita.getDescricao());
-
+        values.put(DBContract.TipoReceitaaTable.COL_ID, tipo.getId());
+        values.put(DBContract.TipoReceitaaTable.COL_DESCRICAO, tipo.getDescricao());
         long insertedId = getDb().insertWithOnConflict(DBContract.TipoReceitaaTable.TABLE_NAME, null, values,
                 SQLiteDatabase.CONFLICT_REPLACE);
-
-        return insertedId;
     }
 
     public TipoReceita buscarTipoReceita(long id){

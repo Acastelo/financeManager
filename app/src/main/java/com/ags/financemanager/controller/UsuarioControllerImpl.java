@@ -6,7 +6,9 @@ import com.ags.financemanager.controller.helper.ExceptionHelper;
 import com.ags.financemanager.controller.servicos.UsuarioServico;
 import com.ags.financemanager.model.bean.Usuario;
 import com.ags.financemanager.model.dao.UsuarioDAO;
+import com.ags.financemanager.model.dao.UsuarioDAOImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,6 +21,11 @@ public class UsuarioControllerImpl extends BaseControllerImpl<Usuario> implement
     private UsuarioDAO usuarioDAO;
     private Context contexto;
     private ExceptionHelper exceptionHelper;
+
+    public UsuarioControllerImpl(Context context){
+        this.usuarioDAO = new UsuarioDAOImpl(context);
+        this.exceptionHelper = new ExceptionHelper();
+    }
 
     public UsuarioControllerImpl(UsuarioDAO usuarioDAO) {
         this.usuarioDAO = usuarioDAO;
@@ -65,7 +72,9 @@ public class UsuarioControllerImpl extends BaseControllerImpl<Usuario> implement
         boolean retorno = false;
         Usuario usuario = null;
 
-        count = usuarioDAO.getTodos().size();
+        List<Usuario> usuarios = usuarioDAO.getTodos();
+        count = usuarios.size();
+
 
         if (count > 0){
 
