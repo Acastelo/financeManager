@@ -5,8 +5,6 @@ import android.content.Context;
 import com.ags.financemanager.controller.exception.ControllerException;
 import com.ags.financemanager.controller.helper.ExceptionHelper;
 import com.ags.financemanager.controller.servicos.TipoReceitaServico;
-import com.ags.financemanager.controller.servicos.UsuarioServico;
-import com.ags.financemanager.controller.servicos.TipoReceitaServico;
 import com.ags.financemanager.model.bean.TipoReceita;
 import com.ags.financemanager.model.dao.TipoReceitaDAO;
 import com.ags.financemanager.model.dao.TipoReceitaDAOImpl;
@@ -92,11 +90,7 @@ public class TipoReceitaControllerImpl extends BaseControllerImpl<TipoReceita> i
 
             if (qtd == 0) {
 
-                List<TipoReceita> tiposReceitaList = tipoReceitaServico.listarTipoReceita();
-
-                for (TipoReceita tipoReceita : tiposReceitaList) {
-                    salvar(tipoReceita);
-                }
+                tipoReceitaServico.listarTipoReceita();
 
             }
 

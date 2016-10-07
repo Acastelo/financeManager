@@ -6,7 +6,6 @@ import com.ags.financemanager.controller.exception.ControllerException;
 import com.ags.financemanager.controller.helper.ExceptionHelper;
 import com.ags.financemanager.controller.servicos.TipoDespesaServico;
 import com.ags.financemanager.model.bean.TipoDespesa;
-import com.ags.financemanager.model.bean.TipoReceita;
 import com.ags.financemanager.model.dao.TipoDespesaDAO;
 import com.ags.financemanager.model.dao.TipoDespesaDAOImpl;
 
