@@ -2,7 +2,10 @@ package com.ags.financemanager.controller.servicos;
 
 import android.content.Context;
 
+import com.ags.financemanager.controller.Callback;
 import com.ags.financemanager.model.bean.TipoReceita;
+import com.ags.financemanager.model.dao.TipoDespesaDAO;
+import com.ags.financemanager.model.dao.TipoDespesaDAOImpl;
 import com.ags.financemanager.model.dao.TipoReceitaDAO;
 import com.ags.financemanager.model.dao.TipoReceitaDAOImpl;
 import com.google.gson.Gson;
@@ -29,13 +32,14 @@ public class TipoReceitaServico {
         this.context = context;
     }
 
-    public List<TipoReceita> listarTipoReceita(){
+    public void listarTipoReceita(){
         final List<TipoReceita> itens = new ArrayList<>();
+        final TipoReceitaDAOImpl dao = new TipoReceitaDAOImpl(context);
 
         AsyncHttpClient client = new AsyncHttpClient();
-        String url = "http://safemoney-onhandcs.rhcloud.com/safemoney/apirest/tipodespesa/listar";
+        String url = "http://safemoney-onhandcs.rhcloud.com/safemoney/apirest/tiporeceita/listar";
         final Gson gson = new Gson();
-        final TipoReceitaDAO tDao = new TipoReceitaDAOImpl(context);
+
         client.get(url, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray array) {
@@ -43,8 +47,8 @@ public class TipoReceitaServico {
                     for (int i = 0; i< array.length(); i++){
                         JSONObject item = array.getJSONObject(i);
                         TipoReceita tipo = gson.fromJson(String.valueOf(item), TipoReceita.class);
-                        tDao.inserirTipoReceita(tipo);
                         itens.add(tipo);
+                        dao.inserirTipoReceita(tipo);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -56,7 +60,5 @@ public class TipoReceitaServico {
             }
 
         });
-
-        return itens;
     }
 }

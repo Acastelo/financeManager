@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface TipoReceitaController extends BaseController<TipoReceita> {
 
-    List<TipoReceita> getTodosOnServer();
+
     List<TipoReceita> getTodos();
     void salvarTodos(List<TipoReceita> tipos);
 }

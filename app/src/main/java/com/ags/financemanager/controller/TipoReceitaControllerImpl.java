@@ -70,22 +70,6 @@ public class TipoReceitaControllerImpl extends BaseControllerImpl<TipoReceita> i
         }
     }
 
-    @Override
-    public List<TipoReceita> getTodosOnServer() {
-        try {
-
-            TipoReceitaServico serv = new TipoReceitaServico(contexto);
-
-            return serv.listarTipoReceita();
-
-        } catch (Exception e) {
-            if (e instanceof ControllerException)
-                throw e;
-
-            throw exceptionHelper.getNewConsultarControllerException(e);
-        }
-    }
-
     private void validarDAO() {
         if (tipoReceitaDAO == null)
             throw new NullPointerException("TipoReceitaDAO está nulo.");
