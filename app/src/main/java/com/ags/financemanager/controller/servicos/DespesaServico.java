@@ -5,6 +5,8 @@ import android.widget.Toast;
 
 import com.ags.financemanager.controller.Callback;
 import com.ags.financemanager.model.bean.Despesa;
+import com.ags.financemanager.model.dao.DespesaDAO;
+import com.ags.financemanager.model.dao.DespesaDAOImpl;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -35,6 +37,7 @@ public class DespesaServico {
 
     public List<Despesa> listarDespesas(){
         final List<Despesa> despesas = new ArrayList<Despesa>();
+        final DespesaDAO dDao = new DespesaDAOImpl(context);
         AsyncHttpClient client = new AsyncHttpClient();
         String url = "http://safemoney-onhandcs.rhcloud.com/safemoney/apirest/despesa/listar";
         final Gson gson = new Gson();
@@ -45,6 +48,7 @@ public class DespesaServico {
                     for (int i = 0; i< array.length(); i++){
                         JSONObject item = array.getJSONObject(i);
                         Despesa despesa = gson.fromJson(String.valueOf(item), Despesa.class);
+                        dDao.inserirDespesa(despesa);
                         despesas.add(despesa);
                     }
                 } catch (JSONException e) {
