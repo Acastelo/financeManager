@@ -1,9 +1,14 @@
 package com.ags.financemanager.model.bean;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
 /**
  * Created by Maikon Igor on 28/09/2016.
  */
-public class Usuario {
+public class Usuario implements Serializable{
+    @SerializedName("idUsuario")
     private long id;
     private String nome;
     private String email;
