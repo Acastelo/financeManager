@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.ags.financemanager.controller.exception.ControllerException;
 import com.ags.financemanager.controller.helper.ExceptionHelper;
+import com.ags.financemanager.controller.servicos.TipoDespesaServico;
 import com.ags.financemanager.model.bean.TipoDespesa;
 import com.ags.financemanager.model.bean.TipoReceita;
 import com.ags.financemanager.model.dao.TipoDespesaDAO;
@@ -20,17 +21,20 @@ public class TipoDespesaControllerImpl extends BaseControllerImpl<TipoDespesa> i
     private TipoDespesaDAO tipoDespesaDAO;
     private ExceptionHelper exceptionHelper;
     private Context context;
+    private TipoDespesaServico tipoDespesaServico;
 
     public TipoDespesaControllerImpl(TipoDespesaDAO tipoDespesaDAO, Context context) {
         this.tipoDespesaDAO = tipoDespesaDAO;
         this.context = context;
         this.exceptionHelper = new ExceptionHelper();
+        this.tipoDespesaServico = new TipoDespesaServico(this.context);
     }
 
     public TipoDespesaControllerImpl(Context context) {
         this.context = context;
         this.tipoDespesaDAO = new TipoDespesaDAOImpl(context);
         this.exceptionHelper = new ExceptionHelper();
+        this.tipoDespesaServico = new TipoDespesaServico(this.context);
     }
 
     @Override
@@ -66,8 +70,7 @@ public class TipoDespesaControllerImpl extends BaseControllerImpl<TipoDespesa> i
 
             if (qtd == 0) {
 
-                TipoDespesaServico servico = new TipoReceitaServico(this.context);
-                List<TipoDespesa> tiposDespesaList = servico.listarTiposDespesa();
+                List<TipoDespesa> tiposDespesaList = tipoDespesaServico.listarTipoDespesa();
 
                 for (TipoDespesa tipoDespesa : tiposDespesaList) {
                     salvar(tipoDespesa);
@@ -88,6 +91,7 @@ public class TipoDespesaControllerImpl extends BaseControllerImpl<TipoDespesa> i
 
             validarDAO();
             tipoDespesaDAO.inserirTipoDespesa(tipoDespesa);
+//            tipoDespesaServico.cadastrarTipoDespesa(tipoDespesa);
 
         } catch (Exception e) {
             if (e instanceof ControllerException)

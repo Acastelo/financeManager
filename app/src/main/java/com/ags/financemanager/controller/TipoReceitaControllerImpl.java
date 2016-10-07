@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.ags.financemanager.controller.exception.ControllerException;
 import com.ags.financemanager.controller.helper.ExceptionHelper;
+import com.ags.financemanager.controller.servicos.TipoReceitaServico;
 import com.ags.financemanager.model.bean.TipoReceita;
 import com.ags.financemanager.model.dao.TipoReceitaDAO;
 import com.ags.financemanager.model.dao.TipoReceitaDAOImpl;
@@ -18,17 +19,20 @@ public class TipoReceitaControllerImpl extends BaseControllerImpl<TipoReceita> i
     private TipoReceitaDAO tipoReceitaDAO;
     private ExceptionHelper exceptionHelper;
     private Context context;
+    private TipoReceitaServico tipoReceitaServico;
 
     public TipoReceitaControllerImpl(TipoReceitaDAO tipoReceitaDAO, Context context) {
         this.tipoReceitaDAO = tipoReceitaDAO;
         this.context = context;
         this.exceptionHelper = new ExceptionHelper();
+        this.tipoReceitaServico = new TipoReceitaServico(this.context);
     }
 
     public TipoReceitaControllerImpl(Context context) {
         this.context = context;
         this.tipoReceitaDAO = new TipoReceitaDAOImpl(context);
         this.exceptionHelper = new ExceptionHelper();
+        this.tipoReceitaServico = new TipoReceitaServico(this.context);
     }
 
     @Override
@@ -64,8 +68,7 @@ public class TipoReceitaControllerImpl extends BaseControllerImpl<TipoReceita> i
 
             if (qtd == 0) {
 
-                TipoReceitaServico servico = new TipoReceitaServico(this.context);
-                List<TipoReceita> tiposReceitaList = servico.listarTiposReceita();
+                List<TipoReceita> tiposReceitaList = tipoReceitaServico.listarTipoReceita();
 
                 for (TipoReceita tipoReceita : tiposReceitaList) {
                     salvar(tipoReceita);
@@ -88,6 +91,7 @@ public class TipoReceitaControllerImpl extends BaseControllerImpl<TipoReceita> i
 
             validarDAO();
             tipoReceitaDAO.inserirTipoReceita(tipoReceita);
+//            tipoReceitaServico.cadastrarTipoReceita(tipoReceita);
 
         } catch (Exception e) {
             if (e instanceof ControllerException)

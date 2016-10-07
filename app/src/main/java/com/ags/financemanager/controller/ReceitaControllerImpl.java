@@ -6,6 +6,7 @@ import com.ags.financemanager.controller.business.ValidadorData;
 import com.ags.financemanager.controller.exception.ControllerException;
 import com.ags.financemanager.controller.helper.ExceptionHelper;
 import com.ags.financemanager.controller.servicos.DespesaServico;
+import com.ags.financemanager.controller.servicos.ReceitaServico;
 import com.ags.financemanager.model.bean.Despesa;
 import com.ags.financemanager.model.bean.Receita;
 import com.ags.financemanager.model.dao.ReceitaDAO;
@@ -23,12 +24,14 @@ public class ReceitaControllerImpl extends BaseControllerImpl<Receita> implement
     private ExceptionHelper exceptionHelper;
     private ValidadorData validadorData;
     private Context context;
+    private ReceitaServico receitaServico;
 
     public ReceitaControllerImpl(ReceitaDAO receitaDAO, Context context) {
         this.receitaDAO = receitaDAO;
         this.context = context;
         this.exceptionHelper = new ExceptionHelper();
         this.validadorData = new ValidadorData();
+        this.receitaServico = new ReceitaServico(context);
     }
 
     public ReceitaControllerImpl(Context context) {
@@ -36,6 +39,7 @@ public class ReceitaControllerImpl extends BaseControllerImpl<Receita> implement
         this.receitaDAO = new ReceitaDAOImpl(context);
         this.exceptionHelper = new ExceptionHelper();
         this.validadorData = new ValidadorData();
+        this.receitaServico = new ReceitaServico(context);
     }
 
     @Override
@@ -46,6 +50,8 @@ public class ReceitaControllerImpl extends BaseControllerImpl<Receita> implement
 
             validarReceitaSalvar(receita);
             receitaDAO.inserirReceita(receita);
+
+//            receitaServico.cadastrarReceita(receita);
 
         } catch (Exception e) {
             if (e instanceof ControllerException)
@@ -69,6 +75,7 @@ public class ReceitaControllerImpl extends BaseControllerImpl<Receita> implement
                 recitaTemp = receita;
                 validarReceitaSalvar(receita);
                 receitaDAO.inserirReceita(receita);
+//                receitaServico.cadastrarReceita(receita);
             }
 
         } catch (Exception e) {
@@ -87,6 +94,7 @@ public class ReceitaControllerImpl extends BaseControllerImpl<Receita> implement
             validarReceitaExcluir(receita);
 
             receitaDAO.excluirReceita(receita);
+//            receitaServico.excluirReceita(receita.getId());
 
         } catch (Exception e) {
             if (e instanceof ControllerException)
@@ -109,6 +117,7 @@ public class ReceitaControllerImpl extends BaseControllerImpl<Receita> implement
                 recitaTemp = receita;
                 validarReceitaExcluir(receita);
                 receitaDAO.excluirReceita(receita);
+//                receitaServico.excluirReceita(receita.getId());
             }
 
         } catch (Exception e) {

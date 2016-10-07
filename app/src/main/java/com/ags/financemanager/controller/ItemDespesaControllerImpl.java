@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.ags.financemanager.controller.exception.ControllerException;
 import com.ags.financemanager.controller.helper.ExceptionHelper;
+import com.ags.financemanager.controller.servicos.ItemDespesaServico;
 import com.ags.financemanager.model.bean.Despesa;
 import com.ags.financemanager.model.bean.ItemDespesa;
 import com.ags.financemanager.model.dao.ItemDespesaDAO;
@@ -19,11 +20,13 @@ public class ItemDespesaControllerImpl extends BaseControllerImpl<ItemDespesa> i
     private ItemDespesaDAO itemDespesaDAO;
     private Context context;
     private ExceptionHelper exceptionHelper;
+    private ItemDespesaServico itemDespesaServico;
 
     public ItemDespesaControllerImpl(Context context) {
         this.context = context;
         this.itemDespesaDAO = new ItemDespesaDAOImpl(context);
         this.exceptionHelper = new ExceptionHelper();
+        this.itemDespesaServico = new ItemDespesaServico(this.context);
     }
 
     public ItemDespesaControllerImpl(Context context, ItemDespesaDAO itemDespesaDAO) {
@@ -60,6 +63,7 @@ public class ItemDespesaControllerImpl extends BaseControllerImpl<ItemDespesa> i
 
             validarDAO();
             itemDespesaDAO.inserirItemDespesa(itemDespesa);
+//            itemDespesaServico.cadastrarItemDespesa(itemDespesa);
 
         } catch (Exception e) {
             if (e instanceof ControllerException)
@@ -77,6 +81,7 @@ public class ItemDespesaControllerImpl extends BaseControllerImpl<ItemDespesa> i
             itemDespesa.validarId();
 
             itemDespesaDAO.excluirItemDespesa(itemDespesa);
+//            itemDespesaServico.excluirItemDespesa(itemDespesa.getId());
 
         } catch (Exception e) {
             if (e instanceof ControllerException)
@@ -96,8 +101,7 @@ public class ItemDespesaControllerImpl extends BaseControllerImpl<ItemDespesa> i
 
             if (qtd == 0) {
 
-                ItemDespesaServico servico = new ItemReceitaServico(this.context);
-                List<ItemDespesa> itemDespesaList = servico.listarItensDespesa();
+                List<ItemDespesa> itemDespesaList = itemDespesaServico.listarItemDespesas();
 
                 for (ItemDespesa itemDespesa : itemDespesaList) {
                     salvar(itemDespesa);

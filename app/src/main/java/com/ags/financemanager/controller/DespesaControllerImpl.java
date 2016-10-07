@@ -21,12 +21,26 @@ public class DespesaControllerImpl extends BaseControllerImpl<Despesa> implement
     private ExceptionHelper exceptionHelper;
     private ValidadorData validadorData;
     private Context context;
+    private DespesaServico despesaServico;
+
+    private Callback callback = new Callback() {
+        @Override
+        public Object sucesso() {
+            return null;
+        }
+
+        @Override
+        public Object erro() {
+            throw exceptionHelper.getNewSincronizacaoControllerException(new RuntimeException());
+        }
+    };
 
     public DespesaControllerImpl(DespesaDAO despesaDAO, Context context) {
         this.despesaDAO = despesaDAO;
         this.context = context;
         this.exceptionHelper = new ExceptionHelper();
         this.validadorData = new ValidadorData();
+        this.despesaServico = new DespesaServico(this.context);
     }
 
     public DespesaControllerImpl(Context context) {
@@ -34,16 +48,18 @@ public class DespesaControllerImpl extends BaseControllerImpl<Despesa> implement
         this.despesaDAO = new DespesaDAOImpl(context);
         this.exceptionHelper = new ExceptionHelper();
         this.validadorData = new ValidadorData();
+        this.despesaServico = new DespesaServico(this.context);
     }
 
     @Override
-    public void salvar(Despesa despesa) {
+    public void salvar(final Despesa despesa) {
         try {
 
             validarDAO();
 
             validarDespesaSalvar(despesa);
             despesaDAO.inserirDespesa(despesa);
+//            despesaServico.cadastrarDespesa(despesa, callback);
 
         } catch (Exception e) {
             if (e instanceof ControllerException)
@@ -66,6 +82,7 @@ public class DespesaControllerImpl extends BaseControllerImpl<Despesa> implement
                 despesaTemp = despesa;
                 validarDespesaSalvar(despesa);
                 despesaDAO.inserirDespesa(despesa);
+//                despesaServico.cadastrarDespesa(despesa, callback);
             }
 
         } catch (Exception e) {
@@ -85,6 +102,7 @@ public class DespesaControllerImpl extends BaseControllerImpl<Despesa> implement
             validarDespesaExcluir(despesa);
 
             despesaDAO.excluirDespesa(despesa);
+//            despesaServico.excluirDespesa(despesa.getId(), callback);
 
         } catch (Exception e) {
             if (e instanceof ControllerException)
@@ -107,6 +125,7 @@ public class DespesaControllerImpl extends BaseControllerImpl<Despesa> implement
                 despesaTemp = despesa;
                 validarDespesaExcluir(despesa);
                 despesaDAO.excluirDespesa(despesa);
+//                despesaServico.excluirDespesa(despesa.getId(), callback);
             }
 
         } catch (Exception e) {
@@ -158,10 +177,9 @@ public class DespesaControllerImpl extends BaseControllerImpl<Despesa> implement
             validarDAO();
             int qtd = despesaDAO.getTodos().size();
 
-            if(qtd == 0) {
+            if (qtd == 0) {
 
-                DespesaServico servico = new DespesaServico(this.context);
-                List<Despesa> despesaList = servico.listarDespesas();
+                List<Despesa> despesaList = despesaServico.listarDespesas();
                 salvarTodos(despesaList);
 
             }

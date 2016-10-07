@@ -21,6 +21,7 @@ public class UsuarioControllerImpl extends BaseControllerImpl<Usuario> implement
     private UsuarioDAO usuarioDAO;
     private Context contexto;
     private ExceptionHelper exceptionHelper;
+    private UsuarioServico usuarioServico;
 
     public UsuarioControllerImpl(UsuarioDAO usuarioDAO) {
         this.usuarioDAO = usuarioDAO;
@@ -31,13 +32,14 @@ public class UsuarioControllerImpl extends BaseControllerImpl<Usuario> implement
         this.usuarioDAO = usuarioDAO;
         this.exceptionHelper = new ExceptionHelper();
         this.contexto = ctx;
-
+        this.usuarioServico = new UsuarioServico(ctx);
     }
 
     public UsuarioControllerImpl(Context context) {
         this.contexto = context;
         this.usuarioDAO = new UsuarioDAOImpl(context);
         this.exceptionHelper = new ExceptionHelper();
+        this.usuarioServico = new UsuarioServico(context);
     }
 
     private void validarDAO() {
@@ -51,11 +53,10 @@ public class UsuarioControllerImpl extends BaseControllerImpl<Usuario> implement
     }
 
     @Override
-    public void salvar(Usuario usuario) {
+    public void salvar(final Usuario usuario) {
         try {
 
             validarDAO();
-
             usuarioDAO.inserirUsuario(usuario);
 
         } catch (Exception e) {
@@ -110,8 +111,7 @@ public class UsuarioControllerImpl extends BaseControllerImpl<Usuario> implement
 
             if (count == 0) {
 
-                UsuarioServico servico = new UsuarioServico(contexto);
-                List<Usuario> usuarios = servico.listarUsuarios();
+                List<Usuario> usuarios = usuarioServico.listarUsuarios();
 
                 for (Usuario usuario : usuarios) {
                     salvar(usuario);

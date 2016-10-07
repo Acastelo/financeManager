@@ -10,9 +10,9 @@ import com.ags.financemanager.model.bean.TipoDespesa;
 public interface TipoDespesaDAO {
 
     void inserirTipoDespesa(TipoDespesa tipoDespesa);
+
     TipoDespesa buscarTipoDespesa(long idTipoDespesa);
 
     List<TipoDespesa> getTodos();
 
-    void inserirTipoDespesa(TipoDespesa tipoDespesa);
 }
