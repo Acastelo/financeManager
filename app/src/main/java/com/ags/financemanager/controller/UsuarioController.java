@@ -12,5 +12,6 @@ public interface UsuarioController extends BaseController<Usuario> {
     Usuario getUsuarioByEmail(String mail);
     void salvar(Usuario usuario);
     boolean logar(String email,String senha);
+    String md5(final String s);
 
 }

@@ -1,9 +1,11 @@
 package com.ags.financemanager.model.dao;
 
+import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 
 import com.ags.financemanager.model.DBContract;
 import com.ags.financemanager.model.DatabaseAccess;
@@ -21,6 +23,7 @@ public class TipoDespesaDAOImpl extends DatabaseAccess implements TipoDespesaDAO
         super(context);
     }
 
+    @TargetApi(Build.VERSION_CODES.FROYO)
     @Override
     public void inserirTipoDespesa(TipoDespesa tipoDespesa) {
         ContentValues values = new ContentValues();

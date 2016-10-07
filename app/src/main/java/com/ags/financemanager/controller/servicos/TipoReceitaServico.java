@@ -47,8 +47,8 @@ public class TipoReceitaServico {
                     for (int i = 0; i< array.length(); i++){
                         JSONObject item = array.getJSONObject(i);
                         TipoReceita tipo = gson.fromJson(String.valueOf(item), TipoReceita.class);
-                        itens.add(tipo);
                         dao.inserirTipoReceita(tipo);
+                        itens.add(tipo);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

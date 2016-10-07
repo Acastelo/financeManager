@@ -25,12 +25,15 @@ public class ReceitaDAOImpl extends DatabaseAccess implements ReceitaDAO {
     @Override
     public long inserirReceita(Receita receita){
         ContentValues values = new ContentValues();
+        if(receita.getId() > 0){
+            values.put(DBContract.ReceitaTable.COL_ID, receita.getId());
+        }
         values.put(DBContract.ReceitaTable.COL_DESCRICAO, receita.getDescricao());
         values.put(DBContract.ReceitaTable.COL_DATA, receita.getData());
         values.put(DBContract.ReceitaTable.COL_ID_CATEGORIA_RECEITA, receita.getTipoReceita().getId());
         values.put(DBContract.ReceitaTable.COL_ID_USUARIO,receita.getUsuario().getId());
 
-        long insertedId = getDb().insertWithOnConflict(DBContract.UsuarioTable.TABLE_NAME, null, values,
+        long insertedId = getDb().insertWithOnConflict(DBContract.ReceitaTable.TABLE_NAME, null, values,
                 SQLiteDatabase.CONFLICT_REPLACE);
 
         return insertedId;
