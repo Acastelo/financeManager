@@ -1,22 +1,11 @@
 package com.ags.financemanager.activities;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
-import android.provider.MediaStore;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +13,6 @@ import com.ags.financemanager.R;
 import com.ags.financemanager.controller.Callback;
 import com.ags.financemanager.controller.UsuarioController;
 import com.ags.financemanager.controller.UsuarioControllerImpl;
-import com.ags.financemanager.controller.exception.ControllerException;
 import com.ags.financemanager.controller.servicos.UsuarioServico;
 import com.ags.financemanager.model.bean.Usuario;
 
@@ -68,7 +56,7 @@ public class CadastroActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            Intent login = new Intent(getApplicationContext(), ListaActivity.class);
+            Intent login = new Intent(getApplicationContext(), AddReceitasActivity.class);
             startActivity(login);
         }
     }
@@ -85,7 +73,7 @@ public class CadastroActivity extends AppCompatActivity {
             UsuarioController uController = new UsuarioControllerImpl(getApplicationContext());
             uController.salvar(usuario);
 
-            Intent lista = new Intent(getApplicationContext(), ListaActivity.class);
+            Intent lista = new Intent(getApplicationContext(), AddReceitasActivity.class);
             startActivity(lista);
             return null;
         }

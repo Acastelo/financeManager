@@ -26,6 +26,16 @@
     <string name="conta">Não tem conta ainda? Crie uma.</string>
     <string name="criar_conta">Criar Conta</string>
     <string name="faca_login">Já é Membro? Faça Login</string>
+    <string name="receita">Incluir Receita</string>
+    <string name="despesa">Incluir Despesa</string>
+    
+    <!--Tela de Add Receitas e Despesas-->
+    <string name="descricao">Descrição</string>
+    <string name="valor">Valor</string>
+    <string name="parcelas">Quantida de Parcelas</string>
+    <string name="tipo_despesa">Tipo de Despesas</string>
+    <string name="tipo_receita">Tipo de Receitas</string>
+    <string name="data">Data</string>
 
     <!--Meses-->
     <string name="janeiro">Janeiro</string>

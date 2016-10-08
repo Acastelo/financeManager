@@ -3,7 +3,6 @@ package com.ags.financemanager.activities;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.widget.Toast;
 import com.ags.financemanager.R;
 
 import com.ags.financemanager.controller.UsuarioControllerImpl;
-import com.ags.financemanager.model.bean.Usuario;
 import com.ags.financemanager.model.dao.UsuarioDAOImpl;
 
 
@@ -74,7 +72,7 @@ public class LoginActivity extends AppCompatActivity implements Runnable{
             handler.post(new Runnable() {
                 public void run() {
                     if (logar){
-                        Intent lista = new Intent(getApplicationContext(), ListaActivity.class);
+                        Intent lista = new Intent(getApplicationContext(), AddReceitasActivity.class);
                         startActivity(lista);
                     }else
                     {
@@ -119,7 +117,7 @@ public class LoginActivity extends AppCompatActivity implements Runnable{
             /*Usuario u = sinc.getUsuarioByEmail(_email);
 
             if (u.getSenha().equals(_senha)){
-                Intent lista = new Intent(getApplicationContext(), ListaActivity.class);
+                Intent lista = new Intent(getApplicationContext(), AddReceitasActivity.class);
                 startActivity(lista);
             }*/
 
