@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.ags.financemanager.controller.UsuarioController;
+import com.ags.financemanager.controller.UsuarioControllerImpl;
 import com.ags.financemanager.model.DBContract;
 import com.ags.financemanager.model.DatabaseAccess;
 import com.ags.financemanager.model.bean.Usuario;
@@ -23,6 +25,7 @@ public class UsuarioDAOImpl extends DatabaseAccess implements UsuarioDAO {
 
     @Override
     public long inserirUsuario(Usuario usuario){
+        UsuarioController uc = new UsuarioControllerImpl(getContext());
         ContentValues values = new ContentValues();
         values.put(DBContract.UsuarioTable.COL_NOME, usuario.getNome());
         values.put(DBContract.UsuarioTable.COL_EMAIL, usuario.getEmail());

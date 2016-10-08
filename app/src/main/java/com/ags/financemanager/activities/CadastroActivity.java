@@ -71,6 +71,8 @@ public class CadastroActivity extends AppCompatActivity {
         @Override
         public Object sucesso() {
             UsuarioController uController = new UsuarioControllerImpl(getApplicationContext());
+            String senhaMD5 = uController.md5(usuario.getSenha());
+            usuario.setSenha(senhaMD5);
             uController.salvar(usuario);
 
             Intent lista = new Intent(getApplicationContext(), AddReceitasActivity.class);

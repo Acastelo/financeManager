@@ -23,6 +23,8 @@ public class DespesaDAOImpl extends DatabaseAccess implements DespesaDAO {
     @Override
     public long inserirDespesa(Despesa despesa){
         ContentValues values = new ContentValues();
+        if(despesa.getId() > 0)
+            values.put(DBContract.DespesaTable.COL_ID, despesa.getId());
         values.put(DBContract.DespesaTable.COL_DESCRICAO, despesa.getDescricao());
         values.put(DBContract.DespesaTable.COL_QTD_PARCELAS, despesa.getQtdParcelas());
         values.put(DBContract.DespesaTable.COL_ID_USUARIO, despesa.getUsuario().getId());

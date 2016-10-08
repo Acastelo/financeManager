@@ -25,6 +25,9 @@ public class ItemDespesaDAOImpl extends DatabaseAccess implements ItemDespesaDAO
     @Override
     public long inserirItemDespesa(ItemDespesa item){
         ContentValues values = new ContentValues();
+        if(item.getId() > 0){
+            values.put(DBContract.ItemDespesaTable.COL_ID, item.getId());
+        }
         values.put(DBContract.ItemDespesaTable.COL_ID_DESPESA, item.getDespesa().getId());
         values.put(DBContract.ItemDespesaTable.COL_DATA, item.getData());
         values.put(DBContract.ItemDespesaTable.COL_VALOR, item.getValor());

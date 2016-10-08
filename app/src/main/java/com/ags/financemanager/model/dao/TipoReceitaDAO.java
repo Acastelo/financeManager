@@ -9,8 +9,7 @@ import com.ags.financemanager.model.bean.TipoReceita;
  */
 public interface TipoReceitaDAO {
 
-    void inserirTipoReceita(TipoReceita tipoReceita);
     TipoReceita buscarTipoReceita(long id);
     List<TipoReceita> getTodos();
-    /*long inserirTipoReceita(TipoReceita tipo);*/
+    long inserirTipoReceita(TipoReceita tipo);
 }
