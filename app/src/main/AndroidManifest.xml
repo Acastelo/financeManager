@@ -22,7 +22,11 @@
         </activity>
         <activity android:name=".activities.CadastroActivity" />
         <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.AddReceitasActivity"></activity>
+        <activity android:name=".activities.AddReceitasActivity" />
+        <activity
+            android:name=".activities.ListaActivity"
+            android:label="@string/title_activity_lista"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

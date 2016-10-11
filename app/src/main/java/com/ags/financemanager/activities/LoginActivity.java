@@ -74,6 +74,7 @@ public class LoginActivity extends AppCompatActivity implements Runnable{
                     if (logar){
                         Intent lista = new Intent(getApplicationContext(), AddReceitasActivity.class);
                         startActivity(lista);
+                        finish();
                     }else
                     {
                         handler.sendEmptyMessage(0);

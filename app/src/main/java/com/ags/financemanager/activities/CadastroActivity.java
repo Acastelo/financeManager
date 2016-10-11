@@ -56,8 +56,7 @@ public class CadastroActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            Intent login = new Intent(getApplicationContext(), AddReceitasActivity.class);
-            startActivity(login);
+            finish();
         }
     }
 

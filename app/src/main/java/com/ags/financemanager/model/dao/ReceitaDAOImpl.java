@@ -38,7 +38,47 @@ public class ReceitaDAOImpl extends DatabaseAccess implements ReceitaDAO {
 
         return insertedId;
     }
+    public ArrayList<Receita> buscarReceitas(){
+        ArrayList<Receita> receitas = new ArrayList<Receita>();
 
+        String colunas[] = {
+                DBContract.ReceitaTable.COL_ID,
+                DBContract.ReceitaTable.COL_DESCRICAO,
+                DBContract.ReceitaTable.COL_DATA,
+                DBContract.ReceitaTable.COL_VALOR,
+                DBContract.ReceitaTable.COL_ID_CATEGORIA_RECEITA,
+                DBContract.ReceitaTable.COL_ID_USUARIO
+        };
+
+        Cursor cursor;
+        cursor = getDb().query(DBContract.ReceitaTable.TABLE_NAME, colunas, null,null,null,null,null);
+
+
+        while(cursor.moveToNext()){
+            long id = cursor.getLong(cursor
+                    .getColumnIndex(DBContract.ReceitaTable.COL_ID));
+            String descricao = cursor.getString(cursor
+                    .getColumnIndex(DBContract.ReceitaTable.COL_DESCRICAO));
+            int data = cursor.getInt(cursor
+                    .getColumnIndex(DBContract.ReceitaTable.COL_DATA));
+            float valor = cursor.getFloat(cursor
+                    .getColumnIndex(DBContract.ReceitaTable.COL_VALOR));
+            int categoriaReceita = cursor.getInt(cursor
+                    .getColumnIndex(DBContract.ReceitaTable.COL_ID_CATEGORIA_RECEITA));
+            int idUsuario = cursor.getInt(cursor
+                    .getColumnIndex(DBContract.ReceitaTable.COL_DATA));
+
+            UsuarioDAOImpl udao = new UsuarioDAOImpl(getContext());
+            TipoReceitaDAOImpl trdao = new TipoReceitaDAOImpl(getContext());
+
+            Usuario usuario = udao.buscarUsuario(idUsuario);
+            TipoReceita tipoReceita = trdao.buscarTipoReceita(categoriaReceita);
+
+            Receita receita = new Receita(descricao,data,valor,tipoReceita,usuario);
+            receitas.add(receita);
+        }
+        return receitas;
+    }
     @Override
     public ArrayList<Receita> buscarReceitaPorData(long dataInicial, long dataFinal){
         ArrayList<Receita> receitas = new ArrayList<Receita>();

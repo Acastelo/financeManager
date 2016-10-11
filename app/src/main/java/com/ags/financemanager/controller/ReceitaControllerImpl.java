@@ -24,6 +24,8 @@ public class ReceitaControllerImpl extends BaseControllerImpl<Receita> implement
         this.validadorData = new ValidadorData();
     }
 
+
+
     @Override
     public void salvar(Receita receita) {
         try {

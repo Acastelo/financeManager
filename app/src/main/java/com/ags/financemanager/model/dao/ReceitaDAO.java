@@ -16,4 +16,6 @@ public interface ReceitaDAO {
     Receita buscarReceita(long idReceita);
 
     boolean excluirReceita(Receita receita);
+
+    ArrayList<Receita> buscarReceitas();
 }

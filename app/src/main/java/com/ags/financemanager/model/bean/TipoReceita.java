@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 public class TipoReceita implements Serializable{
 
-    @SerializedName("idtipo_despesa")
+    @SerializedName("idtipo_receita")
     private long id;
     private String descricao;
 
