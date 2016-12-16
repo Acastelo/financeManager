@@ -3,7 +3,6 @@ package com.ags.financemanager.activities;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,8 +14,7 @@ import android.widget.Toast;
 import com.ags.financemanager.R;
 
 import com.ags.financemanager.controller.UsuarioControllerImpl;
-import com.ags.financemanager.model.bean.Usuario;
-import com.ags.financemanager.model.dao.UsuarioDAOImpl;
+import com.ags.financemanager.model.dao.GenericDAOImpl;
 
 
 public class LoginActivity extends AppCompatActivity implements Runnable{
@@ -26,7 +24,7 @@ public class LoginActivity extends AppCompatActivity implements Runnable{
     private Button btnEnviar;
     private TextView txtConta;
     UsuarioControllerImpl sinc;
-    UsuarioDAOImpl dao;
+    GenericDAOImpl dao;
     String _email;
     String _senha;
     Boolean logar = false;
@@ -42,7 +40,7 @@ public class LoginActivity extends AppCompatActivity implements Runnable{
         edtSenha     = (EditText) findViewById(R.id.edtLoginSenha);
         btnEnviar    = (Button) findViewById(R.id.btnLogin);
         txtConta     = (TextView) findViewById(R.id.txtConta);
-        dao = new UsuarioDAOImpl(getApplicationContext());
+        dao = new GenericDAOImpl(getApplicationContext());
         sinc = new UsuarioControllerImpl(dao,getApplicationContext());
         btnEnviar.setOnClickListener(new BtnEnviarListener());
         txtConta.setOnClickListener(new TxtContaListener());

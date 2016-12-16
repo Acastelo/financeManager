@@ -5,9 +5,7 @@ import com.ags.financemanager.controller.exception.ControllerException;
 import com.ags.financemanager.controller.helper.ExceptionHelper;
 import com.ags.financemanager.controller.servicos.UsuarioServico;
 import com.ags.financemanager.model.bean.Usuario;
-import com.ags.financemanager.model.dao.UsuarioDAO;
-
-import java.util.List;
+import com.ags.financemanager.model.dao.GenericDAO;
 
 
 /**
@@ -16,17 +14,17 @@ import java.util.List;
 
 public class UsuarioControllerImpl extends BaseControllerImpl<Usuario> implements UsuarioController {
 
-    private UsuarioDAO usuarioDAO;
+    private GenericDAO genericDAO;
     private Context contexto;
     private ExceptionHelper exceptionHelper;
 
-    public UsuarioControllerImpl(UsuarioDAO usuarioDAO) {
-        this.usuarioDAO = usuarioDAO;
+    public UsuarioControllerImpl(GenericDAO genericDAO) {
+        this.genericDAO = genericDAO;
         this.exceptionHelper = new ExceptionHelper();
     }
 
-    public UsuarioControllerImpl(UsuarioDAO usuarioDAO, Context ctx) {
-        this.usuarioDAO = usuarioDAO;
+    public UsuarioControllerImpl(GenericDAO genericDAO, Context ctx) {
+        this.genericDAO = genericDAO;
         this.exceptionHelper = new ExceptionHelper();
         this.contexto = ctx;
 
@@ -34,13 +32,13 @@ public class UsuarioControllerImpl extends BaseControllerImpl<Usuario> implement
 
 
     private void validarDAO() {
-        if (usuarioDAO == null)
+        if (genericDAO == null)
             throw new NullPointerException("Usuario está nulo.");
     }
 
     @Override
     public Usuario getUsuarioByEmail(String mail) {
-        return usuarioDAO.buscarUsuarioByEmail(mail);
+        return genericDAO.buscarUsuarioByEmail(mail);
     }
 
     @Override
@@ -49,7 +47,7 @@ public class UsuarioControllerImpl extends BaseControllerImpl<Usuario> implement
 
             validarDAO();
 
-            usuarioDAO.inserirUsuario(usuario);
+            genericDAO.inserir(usuario);
 
         } catch (Exception e) {
             if (e instanceof ControllerException)
@@ -65,11 +63,11 @@ public class UsuarioControllerImpl extends BaseControllerImpl<Usuario> implement
         boolean retorno = false;
         Usuario usuario = null;
 
-        count = usuarioDAO.getTodos().size();
+        count = genericDAO.getTodos().size();
 
         if (count > 0){
 
-            usuario = usuarioDAO.buscarUsuarioByEmail(email);
+            usuario = genericDAO.buscarUsuarioByEmail(email);
 
             if (usuario.getSenha().equals(senha)){
                 retorno = true;
@@ -79,7 +77,7 @@ public class UsuarioControllerImpl extends BaseControllerImpl<Usuario> implement
             UsuarioServico serv = new UsuarioServico(contexto);
             usuario = serv.login(email);
 
-            usuarioDAO.inserirUsuario(usuario);
+            genericDAO.inserir(usuario);
 
             if (usuario.getSenha().equals(senha)){
                 retorno = true;
