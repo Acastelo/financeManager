@@ -62,7 +62,7 @@ public class DespesaDAOImpl extends DatabaseAccess implements DespesaDAO {
             long idTipoDespesa = cursor.getLong(cursor
                     .getColumnIndex(DBContract.DespesaTable.COL_ID_CATEGORIA_DESPESA));
 
-            UsuarioDAOImpl udao = new UsuarioDAOImpl(getContext());
+            GenericDAOImpl udao = new GenericDAOImpl(getContext());
             TipoDespesaDAOImpl tddao = new TipoDespesaDAOImpl(getContext());
 
             Usuario usuario = udao.buscarUsuario(idUsuario);

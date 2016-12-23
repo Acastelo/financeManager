@@ -1,14 +1,15 @@
 package com.ags.financemanager.controller.servicos;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.ags.financemanager.controller.Callback;
 import com.ags.financemanager.model.bean.Usuario;
+<<<<<<< HEAD
 import com.google.gson.Gson;
 import com.loopj.android.http.*;
+=======
+>>>>>>> 40639a90c569e166b3e91aec0c8e6aac513747f1
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,9 +20,12 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+<<<<<<< HEAD
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
+=======
+>>>>>>> 40639a90c569e166b3e91aec0c8e6aac513747f1
 
 /**
  * Created by Maikon Igor on 05/10/2016.

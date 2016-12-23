@@ -111,7 +111,7 @@ public class ReceitaDAOImpl extends DatabaseAccess implements ReceitaDAO {
             int idUsuario = cursor.getInt(cursor
                     .getColumnIndex(DBContract.ReceitaTable.COL_DATA));
 
-            UsuarioDAOImpl udao = new UsuarioDAOImpl(getContext());
+            GenericDAOImpl udao = new GenericDAOImpl(getContext());
             TipoReceitaDAOImpl trdao = new TipoReceitaDAOImpl(getContext());
 
             Usuario usuario = udao.buscarUsuario(idUsuario);
@@ -155,7 +155,7 @@ public class ReceitaDAOImpl extends DatabaseAccess implements ReceitaDAO {
             int idUsuario = cursor.getInt(cursor
                     .getColumnIndex(DBContract.ReceitaTable.COL_DATA));
 
-            UsuarioDAOImpl udao = new UsuarioDAOImpl(getContext());
+            GenericDAOImpl udao = new GenericDAOImpl(getContext());
             TipoReceitaDAOImpl trdao = new TipoReceitaDAOImpl(getContext());
 
             Usuario usuario = udao.buscarUsuario(idUsuario);

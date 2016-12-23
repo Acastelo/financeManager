@@ -10,8 +10,8 @@ import com.ags.financemanager.model.dao.UsuarioDAOImpl;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.List;
+import com.ags.financemanager.model.dao.GenericDAO;
 
 
 /**
@@ -20,7 +20,7 @@ import java.util.List;
 
 public class UsuarioControllerImpl extends BaseControllerImpl<Usuario> implements UsuarioController {
 
-    private UsuarioDAO usuarioDAO;
+    private GenericDAO genericDAO;
     private Context contexto;
     private ExceptionHelper exceptionHelper;
 
@@ -31,11 +31,14 @@ public class UsuarioControllerImpl extends BaseControllerImpl<Usuario> implement
 
     public UsuarioControllerImpl(UsuarioDAO usuarioDAO) {
         this.usuarioDAO = usuarioDAO;
+
+    public UsuarioControllerImpl(GenericDAO genericDAO) {
+        this.genericDAO = genericDAO;
         this.exceptionHelper = new ExceptionHelper();
     }
 
-    public UsuarioControllerImpl(UsuarioDAO usuarioDAO, Context ctx) {
-        this.usuarioDAO = usuarioDAO;
+    public UsuarioControllerImpl(GenericDAO genericDAO, Context ctx) {
+        this.genericDAO = genericDAO;
         this.exceptionHelper = new ExceptionHelper();
         this.contexto = ctx;
 
@@ -43,13 +46,13 @@ public class UsuarioControllerImpl extends BaseControllerImpl<Usuario> implement
 
 
     private void validarDAO() {
-        if (usuarioDAO == null)
+        if (genericDAO == null)
             throw new NullPointerException("Usuario está nulo.");
     }
 
     @Override
     public Usuario getUsuarioByEmail(String mail) {
-        return usuarioDAO.buscarUsuarioByEmail(mail);
+        return genericDAO.buscarUsuarioByEmail(mail);
     }
 
     @Override
@@ -58,7 +61,7 @@ public class UsuarioControllerImpl extends BaseControllerImpl<Usuario> implement
 
             validarDAO();
 
-            usuarioDAO.inserirUsuario(usuario);
+            genericDAO.inserir(usuario);
 
         } catch (Exception e) {
             if (e instanceof ControllerException)
@@ -82,6 +85,8 @@ public class UsuarioControllerImpl extends BaseControllerImpl<Usuario> implement
 
             usuario = usuarioDAO.buscarUsuarioByEmail(email);
             String senhacrip = md5(senha).toUpperCase();
+            count = genericDAO.getTodos().size();
+
 
             if (usuario.getSenha().equals(senhacrip)){
                 retorno = true;
@@ -91,7 +96,7 @@ public class UsuarioControllerImpl extends BaseControllerImpl<Usuario> implement
             UsuarioServico serv = new UsuarioServico(contexto);
             usuario = serv.login(email);
 
-            usuarioDAO.inserirUsuario(usuario);
+            genericDAO.inserir(usuario);
 
             if (usuario.getSenha().equals(senha)){
                 retorno = true;

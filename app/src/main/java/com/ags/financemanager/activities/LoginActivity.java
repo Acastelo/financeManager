@@ -14,7 +14,11 @@ import android.widget.Toast;
 import com.ags.financemanager.R;
 
 import com.ags.financemanager.controller.UsuarioControllerImpl;
+<<<<<<< HEAD
 import com.ags.financemanager.model.dao.UsuarioDAOImpl;
+=======
+import com.ags.financemanager.model.dao.GenericDAOImpl;
+>>>>>>> 40639a90c569e166b3e91aec0c8e6aac513747f1
 
 
 public class LoginActivity extends AppCompatActivity implements Runnable{
@@ -24,7 +28,7 @@ public class LoginActivity extends AppCompatActivity implements Runnable{
     private Button btnEnviar;
     private TextView txtConta;
     UsuarioControllerImpl sinc;
-    UsuarioDAOImpl dao;
+    GenericDAOImpl dao;
     String _email;
     String _senha;
     Boolean logar = false;
@@ -40,7 +44,7 @@ public class LoginActivity extends AppCompatActivity implements Runnable{
         edtSenha     = (EditText) findViewById(R.id.edtLoginSenha);
         btnEnviar    = (Button) findViewById(R.id.btnLogin);
         txtConta     = (TextView) findViewById(R.id.txtConta);
-        dao = new UsuarioDAOImpl(getApplicationContext());
+        dao = new GenericDAOImpl(getApplicationContext());
         sinc = new UsuarioControllerImpl(dao,getApplicationContext());
         btnEnviar.setOnClickListener(new BtnEnviarListener());
         txtConta.setOnClickListener(new TxtContaListener());
