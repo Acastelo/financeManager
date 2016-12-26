@@ -1,10 +1,12 @@
 package com.ags.financemanager.model.bean;
 
+import com.orm.SugarRecord;
+
 /**
  * Created by Maikon Igor on 28/09/2016.
  */
 
-public class TipoReceita {
+public class TipoReceita extends SugarRecord{
     private long id;
     private String descricao;
 
@@ -15,10 +17,6 @@ public class TipoReceita {
 
     public TipoReceita(String descricao) {
         this.descricao = descricao;
-    }
-
-    public long getId() {
-        return id;
     }
 
     public void setId(long id) {

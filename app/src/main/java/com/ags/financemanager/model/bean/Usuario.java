@@ -1,9 +1,11 @@
 package com.ags.financemanager.model.bean;
 
+import com.orm.SugarRecord;
+
 /**
  * Created by Maikon Igor on 28/09/2016.
  */
-public class Usuario {
+public class Usuario extends SugarRecord{
     private long id;
     private String nome;
     private String email;
@@ -18,10 +20,6 @@ public class Usuario {
     public Usuario(long id, String nome, String email, String senha) {
         this(nome, email, senha);
         this.id = id;
-    }
-
-    public long getId() {
-        return id;
     }
 
     public void setId(long id) {

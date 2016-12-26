@@ -1,12 +1,14 @@
 package com.ags.financemanager.model.bean;
 
+import com.orm.SugarRecord;
+
 import java.util.Date;
 
 /**
  * Created by Maikon Igor on 28/09/2016.
  */
 
-public class Receita {
+public class Receita extends SugarRecord{
 
     private long id;
     private String descricao;
@@ -27,10 +29,6 @@ public class Receita {
     public Receita(long id, String descricao, int data, float valor, TipoReceita tipoReceita, Usuario usuario) {
         this(descricao, data, valor, tipoReceita, usuario);
         this.id = id;
-    }
-
-    public long getId() {
-        return id;
     }
 
     public void setId(long id) {

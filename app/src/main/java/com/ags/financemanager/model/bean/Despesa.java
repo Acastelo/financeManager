@@ -1,16 +1,22 @@
 package com.ags.financemanager.model.bean;
 
+import com.orm.SugarRecord;
+
 /**
  * Created by Maikon Igor on 28/09/2016.
+ *
+ * Alterated by Alexandre on 26/12/2016.
  */
 
-public class Despesa {
+public class Despesa extends SugarRecord {
 
     private long id;
     private String descricao;
     private int qtdParcelas;
     private Usuario usuario;
     private TipoDespesa tipoDespesa;
+
+    public Despesa(){}
 
     public Despesa(String descricao, int qtdParcelas, Usuario usuario, TipoDespesa tipoDespesa) {
         this.descricao = descricao;
@@ -22,10 +28,6 @@ public class Despesa {
     public Despesa(long id, String descricao, int qtdParcelas, Usuario usuario, TipoDespesa tipoDespesa) {
         this(descricao, qtdParcelas, usuario, tipoDespesa);
         this.id = id;
-    }
-
-    public long getId() {
-        return id;
     }
 
     public void setId(long id) {
